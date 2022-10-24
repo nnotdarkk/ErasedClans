@@ -46,7 +46,7 @@ public class QuestsLiseners implements Listener {
     @EventHandler
     public void event(SmithItemEvent e){
         if(e.getCurrentItem().getType() == Material.NETHERITE_HOE){
-            e.getWhoClicked().sendMessage("test10");
+            //e.getWhoClicked().sendMessage("test10");
         }
     }
 
@@ -57,7 +57,7 @@ public class QuestsLiseners implements Listener {
             if(main.getBlocksManager().containsBlock(block.getLocation())){
                 return;
             }
-            e.getPlayer().sendMessage("test1");
+            //e.getPlayer().sendMessage("test1");
         }
     }
     /*

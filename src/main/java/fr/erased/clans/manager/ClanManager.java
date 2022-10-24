@@ -359,6 +359,16 @@ public class ClanManager {
         return f.getStringList("claims");
     }
 
+    public void removeAllChunks(String name){
+        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
+        f.set("claims", new ArrayList<>());
+        try {
+            f.save(main.getFileManager().getFile("clans", name));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void addClaim(String name, Chunk chunk){
         YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
 
