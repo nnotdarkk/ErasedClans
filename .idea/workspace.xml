@@ -4,35 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="patches">
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/TaskDiscord.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/LuckPermsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/LuckPermsHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/Clan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/Clan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/TabClan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/TabClan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/DiscordWebhook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/DiscordWebhook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/enums/QuestDifficulty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/enums/QuestDifficulty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/AsyncPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/AsyncPlayerChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/InventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/InventoryClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerClaims.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerClaims.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerJoin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerQuit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyClaims.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyClaims.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyListeners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/BlocksManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/BlocksManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ChunkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ChunkManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/FileManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/PlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsLiseners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsLiseners.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/CreateUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/CreateUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ItemBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/WebhookManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,6 +90,14 @@
       <option name="presentableId" value="Default" />
       <updated>1664040547675</updated>
     </task>
+    <task id="LOCAL-00001" summary="patches">
+      <created>1666604827264</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666604827264</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -126,5 +110,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="patches" />
+    <option name="LAST_COMMIT_MESSAGE" value="patches" />
   </component>
 </project>

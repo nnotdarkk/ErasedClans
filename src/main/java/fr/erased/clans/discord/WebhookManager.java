@@ -4,10 +4,10 @@ import lombok.SneakyThrows;
 
 import java.awt.*;
 
-public class Test {
+public class WebhookManager {
 
     @SneakyThrows
-    public void sendTest(){
+    public void sendWebhook(){
         DiscordWebhook webhook = new DiscordWebhook("https://discord.com/api/webhooks/1033299482340761642/zek1Q1yRIuw3pZuieMatH2sssw3bR1yBuPbPDmZslZmPCIvInd2giGuH2UkY9PUnBYu0");
         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                 .setTitle(":trophy: - Classement des clans")

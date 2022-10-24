@@ -2,7 +2,7 @@ package fr.erased.clans;
 
 import fr.erased.clans.commands.Clan;
 import fr.erased.clans.commands.TabClan;
-import fr.erased.clans.discord.Test;
+import fr.erased.clans.discord.WebhookManager;
 import fr.erased.clans.events.*;
 import fr.erased.clans.fly.FlyClaims;
 import fr.erased.clans.fly.FlyListeners;
@@ -54,8 +54,6 @@ public class Main extends JavaPlugin {
         if(!getDataFolder().exists()){
             getDataFolder().mkdir();
         }
-
-        new Test().sendTest();
 
         fileManager = new FileManager(this);
         fileManager.createFolder("clans");
