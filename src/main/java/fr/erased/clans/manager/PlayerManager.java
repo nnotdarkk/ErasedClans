@@ -1,4 +1,4 @@
-package fr.erased.clans.tools;
+package fr.erased.clans.manager;
 
 import fr.erased.clans.Main;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -7,8 +7,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 
 public class PlayerManager {

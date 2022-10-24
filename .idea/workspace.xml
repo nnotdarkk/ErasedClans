@@ -1,14 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="" />
+    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/LuckPermsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/LuckPermsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/Clan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/Clan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/TabClan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/TabClan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/DiscordWebhook.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/DiscordWebhook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/discord/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/enums/QuestDifficulty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/enums/QuestDifficulty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/AsyncPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/AsyncPlayerChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/InventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/InventoryClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerClaims.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerClaims.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerJoin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerJoin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerQuit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/events/PlayerQuit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyClaims.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyClaims.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyListeners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/BlocksManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/BlocksManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ChunkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ChunkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/FileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/FileManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsLiseners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsLiseners.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/quests/QuestsUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/CreateUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/CreateUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ItemBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="2FDxdoHMnhLAk8JHdOjXPGYl1KB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -16,12 +59,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Makar/eclipse-workspace/StormPlugin&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
-}]]></component>
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="fr.erased.clans" />
+      <recent name="fr.erased.clans.ui" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="ErasedClans [clean,install]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="clean" />
+                <option value="install" />
+              </list>
+            </option>
+            <option name="pomFileName" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -32,5 +115,16 @@
       <updated>1664040547675</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -1,4 +1,4 @@
-package fr.nathan.utils;
+package fr.erased.clans.ui;
 
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
@@ -77,7 +77,7 @@ public class ItemBuilder {
 
     public ItemBuilder setInfinityDurability() {
         final ItemMeta meta = this.is.getItemMeta();
-        meta.spigot().setUnbreakable(true);
+        meta.setUnbreakable(true);
         this.is.setItemMeta(meta);
         return this;
     }
@@ -102,7 +102,7 @@ public class ItemBuilder {
 
     @SuppressWarnings("deprecation")
     public ItemBuilder setWoolColor(DyeColor color) {
-        this.is.setDurability(color.getData());
+        this.is.setDurability(color.getWoolData());
         return this;
     }
 

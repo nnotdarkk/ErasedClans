@@ -1,4 +1,4 @@
-package fr.erased.clans.tools;
+package fr.erased.clans.manager;
 
 import fr.erased.clans.Main;
 

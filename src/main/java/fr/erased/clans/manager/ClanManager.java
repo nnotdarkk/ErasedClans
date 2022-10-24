@@ -1,8 +1,7 @@
-package fr.erased.clans.tools;
+package fr.erased.clans.manager;
 
 import fr.erased.clans.Main;
 import fr.erased.clans.enums.QuestDifficulty;
-import it.unimi.dsi.fastutil.Hash;
 import org.bukkit.Chunk;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -65,7 +64,7 @@ public class ClanManager {
     }
 
     public int getClanMaxClaims(String clan){
-        return getMembers(clan).size();
+        return getMembers(clan).size() * 10;
     }
 
     public void setClanXp(String clan, int xp){
@@ -264,12 +263,15 @@ public class ClanManager {
     }
 
     public void removeClan(String name) {
-        main.getFileManager().removeFile("clans", name);
+
 
         for(String member : getMembers(name)){
             String playername = main.getPlayerManager().getNameByUUID(member);
             main.getPlayerManager().unregisterClan(member);
         }
+        main.getChunkManager().removeAllClaimsForClan(name);
+
+        main.getFileManager().removeFile("clans", name);
     }
 
     public List<String> getAllies(String clan) {

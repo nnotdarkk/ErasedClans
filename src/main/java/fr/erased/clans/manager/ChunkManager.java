@@ -1,12 +1,12 @@
-package fr.erased.clans.tools;
+package fr.erased.clans.manager;
 
 import fr.erased.clans.Main;
 import org.bukkit.Chunk;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class ChunkManager {
 
@@ -65,5 +65,23 @@ public class ChunkManager {
     public String getClaimer(Chunk chunk){
         YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
         return f.getString(chunk.toString());
+    }
+
+    public void removeAllClaimsForClan(String clan){
+
+        YamlConfiguration f1 = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
+        YamlConfiguration f2 = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
+
+        List<String> chunks = f1.getStringList("claims");
+
+        for(String chunk : chunks){
+            f2.set(chunk, null);
+        }
+
+        try {
+            f2.save(main.getFileManager().getFile("chunk", "chunks"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
