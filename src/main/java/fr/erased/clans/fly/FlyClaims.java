@@ -27,7 +27,7 @@ public class FlyClaims implements CommandExecutor {
         }
 
         if(!main.getChunkManager().isClaimed(player.getLocation().getChunk())){
-            sender.sendMessage("§cVous ne pouvez pas activer le fly dans une zonen non claim !");
+            sender.sendMessage("§cVous ne pouvez pas activer le fly dans une zone non claim !");
             return true;
         }
 

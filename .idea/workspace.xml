@@ -6,9 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="patches">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/Clan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/Clan.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/TabClan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/TabClan.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyClaims.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/fly/FlyClaims.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

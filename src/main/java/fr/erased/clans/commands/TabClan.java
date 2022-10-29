@@ -27,6 +27,7 @@ public class TabClan implements TabCompleter {
             list.add("unclaim");
             list.add("unclaimall");
             list.add("create");
+            list.add("fly");
             return list;
         }
 
