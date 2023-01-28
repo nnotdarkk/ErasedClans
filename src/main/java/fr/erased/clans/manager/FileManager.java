@@ -86,5 +86,7 @@ public class FileManager {
         return new File(main.getDataFolder(), foldername);
     }
 
-
+    public boolean fileExists(String folder, String filename){
+        return getFile(folder, filename).exists();
+    }
 }

@@ -7,10 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.SmithItemEvent;
-import org.bukkit.event.player.PlayerItemBreakEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 
 public class QuestsLiseners implements Listener {
 
@@ -19,6 +16,13 @@ public class QuestsLiseners implements Listener {
     public QuestsLiseners(Main main) {
         this.main = main;
     }
+
+
+    /*
+
+
+
+     */
 
     @EventHandler
     public void event(BlockPlaceEvent e){
@@ -37,6 +41,7 @@ public class QuestsLiseners implements Listener {
             }
         }
     }
+    
     /*
 
      Easy

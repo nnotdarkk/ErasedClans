@@ -27,7 +27,7 @@ public class PlayerClaims implements Listener {
             String clan = main.getChunkManager().getClaimer(chunk);
             if(!main.getClanManager().getMembers(clan).contains(uuid)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage("§4§lHey! §7Vous ne pouvez pas faire ça dans une zone claim");
+                e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
             }
         }
     }
@@ -40,7 +40,7 @@ public class PlayerClaims implements Listener {
             String clan = main.getChunkManager().getClaimer(chunk);
             if(!main.getClanManager().getMembers(clan).contains(uuid)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage("§4§lHey! §7Vous ne pouvez pas faire ça dans une zone claim");
+                e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
             }
         }
     }
@@ -56,7 +56,7 @@ public class PlayerClaims implements Listener {
             String clan = main.getChunkManager().getClaimer(chunk);
             if(!main.getClanManager().getMembers(clan).contains(uuid)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage("§4§lHey! §7Vous ne pouvez pas faire ça dans une zone claim");
+                e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
             }
         }
     }

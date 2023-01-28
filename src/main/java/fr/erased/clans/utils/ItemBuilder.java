@@ -1,4 +1,4 @@
-package fr.erased.clans.ui;
+package fr.erased.clans.utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;

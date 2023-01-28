@@ -1,6 +1,7 @@
 package fr.erased.clans.ui;
 
 import fr.erased.clans.Main;
+import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

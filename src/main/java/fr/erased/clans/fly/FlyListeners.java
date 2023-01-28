@@ -23,24 +23,22 @@ public class FlyListeners implements Listener {
         Chunk to = e.getTo().getChunk();
 
         PlayerManager playerManager = new PlayerManager(main);
+        FlyStorage flyStorage = new FlyStorage();
 
         Player player = e.getPlayer();
 
-        if(player.getGameMode().equals(GameMode.CREATIVE)){
-            return;
-        }
-
         if(from != to){
             if(!main.getChunkManager().isClaimed(to)){
-                if(player.getAllowFlight()){
-                    player.setAllowFlight(false);
-                    player.sendMessage("§cVotre fly à été désactivé car vous avez quitté votre claim.");
-                }
 
                 if(main.getChunkManager().isClaimed(from)){
                     player.sendTitle("", "§7Vous sortez du clan §6" + main.getChunkManager().getClaimer(from), 10, 20, 10);
                 }
 
+                if(flyStorage.isFly(player)){
+                    player.setAllowFlight(false);
+                    flyStorage.setFly(e.getPlayer(), false);
+                    player.sendMessage("§cVotre fly à été désactivé car vous avez quitté votre claim.");
+                }
 
                 return;
             }
@@ -50,8 +48,9 @@ public class FlyListeners implements Listener {
                 String playerclan = playerManager.getClan(e.getPlayer());
 
                 if(!claimer.equals(playerclan)){
-                    if(player.getAllowFlight()){
+                    if(flyStorage.isFly(player)){
                         player.setAllowFlight(false);
+                        flyStorage.setFly(e.getPlayer(), false);
                         player.sendMessage("§cVotre fly à été désactivé car vous avez quitté votre claim.");
                     }
                 }

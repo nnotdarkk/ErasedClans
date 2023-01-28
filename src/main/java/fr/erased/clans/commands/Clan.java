@@ -1,7 +1,8 @@
 package fr.erased.clans.commands;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.manager.ChunkManager;
+import fr.erased.clans.fly.FlyStorage;
+import fr.erased.clans.manager.ChestManager;
 import fr.erased.clans.manager.ClanManager;
 import fr.erased.clans.manager.PlayerManager;
 import fr.erased.clans.ui.ClanUI;
@@ -149,29 +150,6 @@ public class Clan implements CommandExecutor {
         }
 
         if(args[0].equalsIgnoreCase("quit")){
-            if(!(args.length == 1 || args.length == 2)) {
-                player.sendMessage("§c/clan quit <confirm>");
-                return false;
-            }
-
-            if(args[1].equalsIgnoreCase("confirm")){
-                if(!playerManager.inClan(player)) {
-                    player.sendMessage("§cVous n'êtes pas dans un clan");
-                    return false;
-                }
-
-                String clan = playerManager.getClan(player);
-                player.sendMessage("§cVous avez quitté le clan " + clan);
-                clanManager.removeMember(clan, player);
-                playerManager.unregisterClan(player.getUniqueId().toString());
-                for (int i = 0; i < clanManager.getMembers(clan).size(); i++) {
-                    Player member = Bukkit.getPlayer(clanManager.getMembers(clan).get(i));
-                    if (member != null) {
-                        member.sendMessage("§c§l» §7" + player.getName() + " a quitté le clan");
-                    }
-                }
-            }
-
             if(!playerManager.inClan(player)) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
                 return false;
@@ -298,6 +276,53 @@ public class Clan implements CommandExecutor {
 
             CreateUI createUI = new CreateUI(player, main);
             createUI.openCreateUI();
+        }
+
+        if(args[0].equalsIgnoreCase("fly")){
+
+            if(!sender.hasPermission("clans.flyclaims")){
+                sender.sendMessage("§cVous n'avez pas la permission d'utiliser cette commande !");
+                return true;
+            }
+
+            if(!main.getChunkManager().isClaimed(player.getLocation().getChunk())){
+                sender.sendMessage("§cVous ne pouvez pas activer le fly dans une zone non claim !");
+                return true;
+            }
+
+            String claimer = main.getChunkManager().getClaimer(player.getLocation().getChunk());
+            String playerclan = main.getPlayerManager().getClan(player);
+
+            if(!claimer.equals(playerclan)){
+                sender.sendMessage("§cVous ne pouvez pas activer le fly dans une zone claim par un autre clan !");
+                return true;
+            }
+
+            FlyStorage flyStorage = new FlyStorage();
+
+            if(flyStorage.isFly(player)) {
+                player.setAllowFlight(false);
+                flyStorage.setFly(player, false);
+                player.sendMessage("§e§lErased§6§lClans §7» §eVous ne pouvez plus voler dans vos claims");
+            } else {
+                player.setAllowFlight(true);
+                flyStorage.setFly(player, true);
+                player.sendMessage("§e§lErased§6§lClans §7» §eVous pouvez désormais voler dans vos claims");
+            }
+
+            return false;
+
+        }
+
+        if(args[0].equalsIgnoreCase("chest")){
+            if(main.getPlayerManager().getClan(player) == "null"){
+                sender.sendMessage("§cVous n'êtes pas dans un clan !");
+                return true;
+            }
+
+            ChestManager chestManager = new ChestManager(main, player);
+            chestManager.openChest();
+            return false;
         }
         return false;
     }

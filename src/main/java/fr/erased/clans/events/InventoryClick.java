@@ -5,6 +5,7 @@ import fr.erased.clans.quests.QuestsUI;
 import fr.erased.clans.manager.ClanManager;
 import fr.erased.clans.manager.PlayerManager;
 import fr.erased.clans.ui.ClanUI;
+import fr.erased.clans.utils.ChatUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,7 +34,11 @@ public class InventoryClick implements Listener {
             switch (e.getCurrentItem().getType()){
                 case LIME_TERRACOTTA:
                     player.closeInventory();
-                    player.sendMessage("§aEcrivez le nom de votre clan dans le chat §7('cancel' pour annuler)");
+                    player.sendMessage(ChatUtils.getCenteredText("§7 "));
+                    player.sendMessage(ChatUtils.getCenteredText("§6§lCRÉATION DE CLAN"));
+                    player.sendMessage(ChatUtils.getCenteredText("§7Inscrivez le nom de votre clan dans le chat"));
+                    player.sendMessage(ChatUtils.getCenteredText("§7('annuler' pour annuler)"));
+                    player.sendMessage(ChatUtils.getCenteredText("§7 "));
                     new PlayerManager(main).setState(player, true);
                     break;
 
@@ -51,13 +56,11 @@ public class InventoryClick implements Listener {
                     break;
 
                 case BARRIER:
-                    player.closeInventory();
                     ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main);
                     clanUI.quitClanUi(playerManager.getClan(player));
                     break;
 
                 case BOOK:
-                    player.closeInventory();
                     QuestsUI questsUI= new QuestsUI(main, player);
                     questsUI.openEasyQuestsUI(playerManager.getClan(player));
                     break;

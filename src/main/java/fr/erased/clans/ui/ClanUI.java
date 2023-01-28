@@ -4,6 +4,7 @@ import fr.erased.clans.Main;
 import fr.erased.clans.enums.QuestDifficulty;
 import fr.erased.clans.manager.ClanManager;
 import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,8 +18,8 @@ import java.util.List;
 public class ClanUI {
 
     private final Main main;
-    private ClanManager clanManager;
-    private PlayerManager playerManager;
+    private final ClanManager clanManager;
+    private final PlayerManager playerManager;
     private final Player player;
 
     public ClanUI(Player player, Main main) {
@@ -28,35 +29,28 @@ public class ClanUI {
         this.player = player;
     }
 
+    public int percent(double currentValue, double maxValue){
+        return (int) ((currentValue/maxValue) *100);
+    }
+
     public void openClanUI(String name){
         Inventory inv = Bukkit.createInventory(null, 54, "Clan: " + name + " [" + clanManager.getMembers(name).size() + "/15]");
 
         String ownerid = clanManager.getOwner(name);
         String owner = main.getPlayerManager().getNameByUUID(ownerid);
-        ItemStack clan = new ItemBuilder(Material.NAME_TAG).setDisplayName("§e" + name).setLoreWithList(Arrays.asList(
-                " ",
-                "§8▪ §7Tag: §6" + clanManager.getTag(name),
-                "§8▪ §7Membres: §b" + clanManager.getMembers(name).size() + "§8/§b15",
-                "§8▪ §7Chef: §3" + owner,
-                "§8▪ §7Niveau: §a" + clanManager.getClanLevel(name),
-                "§8▪ §7Expérience: §a" + clanManager.getClanXp(name) + "§8/§a" + clanManager.getClanExpToNextLevel(name)
-        )).build(false);
 
-        String nick;
-        if(Bukkit.getPlayer(owner) != null){
-            nick = "§a" + owner + " §a§l✓";
-        } else {
-            nick = "§c" + owner + " §c✘";
+        int percent = percent(clanManager.getClanXp(name), clanManager.getClanExpToNextLevel(name));
+
+        StringBuilder p = new StringBuilder();
+        p.append("§8[");
+        for (int i = 0; i < 19; i++) {
+            if (i < (percent / 5)) {
+                p.append("§a▮");
+            } else {
+                p.append("§7▮");
+            }
         }
-
-        /*String rank = new LuckPermsHandler(player).getPrefix();*/
-        /*String classe = "%mmocore_class%";
-        classe = PlaceholderAPI.setPlaceholders(player, classe);*/
-        ItemStack chef = new ItemBuilder(Material.PLAYER_HEAD, 1, (short) 3).setSkullOwner(owner).setDisplayName("§7Chef: " + nick).setLoreWithList(Arrays.asList(
-                "",
-                "§8▪ §7Grade: "/* + rank*/,
-                "§8▪ §7Classe: "/* + classe*/
-        )).build(true);
+        p.append("§8]");
 
         List<String> allies = new ArrayList<>();
 
@@ -68,35 +62,46 @@ public class ClanUI {
             }
         }
 
-        List<String> ennemy = new ArrayList<>();
-
-        if(clanManager.getEnemies(name).size() == 0){
-            ennemy.add("§cAucun");
-        } else {
-            for(String enemy : clanManager.getEnemies(name)){
-                ennemy.add("§c" + enemy);
-            }
-        }
-
-        ItemStack situation = new ItemBuilder(Material.SHIELD).setDisplayName("§7Relation:").setLoreWithList(Arrays.asList(
-                "",
-                "§8▪ §7Alliés:",
-                " " + allies.toString().replaceAll("\\[", "").replaceAll("]", ""),
+        ItemStack clan = new ItemBuilder(Material.NAME_TAG).setDisplayName("§e" + name).setLoreWithList(Arrays.asList(
                 " ",
-                "§8▪ §7Ennemis:",
-                " " + ennemy.toString().replaceAll("\\[", "").replaceAll("]", ""),
-                " "
+                "§8▪ §7Statut: §3" + owner,
+                "§8▪ §7Chef: §3" + owner,
+                "§8▪ §7Membres: §b" + clanManager.getMembers(name).size(),
+                "§8▪ §7Niveau: §e" + clanManager.getClanLevel(name),
+                "  " + p + " §8" + percent + "%",
+                "§8▪ §7Alliés:" + allies.toString().replaceAll("\\[", "").replaceAll("]", "")
         )).build(false);
 
-        ItemStack quests = new ItemBuilder(Material.BOOK).setDisplayName("§7Quêtes:").setLoreWithList(Arrays.asList(
+        String nick;
+        if(Bukkit.getPlayer(owner) != null){
+            nick = "§a" + owner + " §a§l✓";
+        } else {
+            nick = "§c" + owner + " §c✘";
+        }
+
+        //String rank = new LuckPermsHandler(player_owner).getPrefix();
+        /*String classe = "%mmocore_class%";
+        classe = PlaceholderAPI.setPlaceholders(player, classe);*/
+        ItemStack chef = new ItemBuilder(Material.PLAYER_HEAD, 1, (short) 3).setSkullOwner(owner).setDisplayName("§7Chef: " + nick).setLoreWithList(Arrays.asList(
                 "",
-                "§8▪ §7Quêtes faciles: §a" + clanManager.getQuestListCompleted(name, QuestDifficulty.Facile) +"§7/§a10",
-                "§8▪ §7Quêtes normales: §e" + clanManager.getQuestListCompleted(name, QuestDifficulty.Moyen )+ "§7/§e10",
-                "§8▪ §7Quêtes difficiles: §c" + clanManager.getQuestListCompleted(name, QuestDifficulty.Moyen) + "§7/§c10",
+                "§8▪ §7Grade: "/* +rank */,
+                "§8▪ §7Classe: "/* + classe*/
+        )).build(true);
+
+        ItemStack quests = new ItemBuilder(Material.BOOK).setDisplayName("§6Quêtes").setLoreWithList(Arrays.asList(
+                "",
                 " ",
                 "§6» §eClique pour y aller"
         )).build(false);
 
+        ItemStack chest = new ItemBuilder(Material.CHEST).setDisplayName("§eCoffre de clan").setLoreWithList(Arrays.asList(
+                "",
+                "§8▪ Stockez les objets que vous souhaitez",
+                "  §7et partagez les avec votre clan dans",
+                "  §7un endroit sûr et sécurisé.",
+                " ",
+                "§6▸ §eClique pour t'y rendre"
+        )).build(false);
         ItemStack vitre = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ").build(false);
         ItemStack quit = new ItemBuilder(Material.BARRIER).setDisplayName("§8» §cQuitter le clan").build(false);
         ItemStack retour = new ItemBuilder(Material.ARROW).setDisplayName("§8» §cRetour").build(false);
@@ -115,9 +120,8 @@ public class ClanUI {
         inv.setItem(53, vitre);
 
         inv.setItem(30, quests);
-        inv.setItem(22, situation);
-        inv.setItem(21, clan);
-        inv.setItem(23, chef);
+        inv.setItem(22, clan);
+        inv.setItem(31, chef);
 
         inv.setItem(50, quit);
         inv.setItem(48, retour);

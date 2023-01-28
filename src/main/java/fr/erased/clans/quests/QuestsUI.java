@@ -2,7 +2,7 @@ package fr.erased.clans.quests;
 
 import fr.erased.clans.Main;
 import fr.erased.clans.enums.QuestDifficulty;
-import fr.erased.clans.ui.ItemBuilder;
+import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

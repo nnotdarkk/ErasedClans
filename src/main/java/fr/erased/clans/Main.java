@@ -2,9 +2,8 @@ package fr.erased.clans;
 
 import fr.erased.clans.commands.Clan;
 import fr.erased.clans.commands.TabClan;
-import fr.erased.clans.discord.WebhookManager;
+import fr.erased.clans.discord.TaskDiscord;
 import fr.erased.clans.events.*;
-import fr.erased.clans.fly.FlyClaims;
 import fr.erased.clans.fly.FlyListeners;
 import fr.erased.clans.manager.*;
 import fr.erased.clans.quests.QuestsLiseners;
@@ -45,12 +44,12 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new PlayerClaims(this), this);
         pm.registerEvents(new FlyListeners(this), this);
         pm.registerEvents(new QuestsLiseners(this), this);
+        pm.registerEvents(new ClanChestInteract(this), this);
 
         PluginCommand command = this.getCommand("clan");
         command.setExecutor(new Clan(instance));
         command.setTabCompleter(new TabClan());
 
-        this.getCommand("flyclaims").setExecutor(new FlyClaims(this));
         if(!getDataFolder().exists()){
             getDataFolder().mkdir();
         }
@@ -64,6 +63,9 @@ public class Main extends JavaPlugin {
         playerManager = new PlayerManager(this);
         clanManager = new ClanManager(this);
         chunkManager = new ChunkManager(this);
+
+        TaskDiscord taskDiscord = new TaskDiscord(this);
+        taskDiscord.runTaskTimerAsynchronously(this, 0, 20L * 60L * 15L);
     }
 
     @Override

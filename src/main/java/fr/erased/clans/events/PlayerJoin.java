@@ -1,6 +1,7 @@
 package fr.erased.clans.events;
 
 import fr.erased.clans.Main;
+import fr.erased.clans.fly.FlyStorage;
 import fr.erased.clans.manager.PlayerManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +21,7 @@ public class PlayerJoin implements Listener {
     public void onJoin(PlayerJoinEvent e){
         playerManager.registerPlayer(e.getPlayer());
 
+        new FlyStorage().setFly(e.getPlayer(), false);
         playerManager.setState(e.getPlayer(), false);
     }
 }
