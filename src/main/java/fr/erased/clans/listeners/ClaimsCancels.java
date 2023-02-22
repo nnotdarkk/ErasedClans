@@ -1,4 +1,4 @@
-package fr.erased.clans.events;
+package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
 import org.bukkit.Chunk;
@@ -11,11 +11,11 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class PlayerClaims implements Listener {
+public class ClaimsCancels implements Listener {
 
     private final Main main;
 
-    public PlayerClaims(Main main) {
+    public ClaimsCancels(Main main) {
         this.main = main;
     }
 
@@ -48,7 +48,6 @@ public class PlayerClaims implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
     public void event(PlayerInteractEvent e){
         if(e.getClickedBlock() == null) return;
-        if(e.getClickedBlock().getType() == null) return;
 
         if(main.getChunkManager().isClaimed(e.getClickedBlock().getLocation().getChunk())){
             String uuid = e.getPlayer().getUniqueId().toString();

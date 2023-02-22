@@ -1,4 +1,4 @@
-package fr.erased.clans.manager;
+package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
 import org.bukkit.Chunk;

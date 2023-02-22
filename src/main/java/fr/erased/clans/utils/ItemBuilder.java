@@ -14,7 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ItemBuilder {
-    private ItemStack is;
+
+    private final ItemStack is;
 
     public ItemBuilder(Material m) {
         this(m, 1);
@@ -90,12 +91,12 @@ public class ItemBuilder {
     }
 
     public ItemBuilder setLoreWithList(List<String> lore) {
-        final List<String> toSet = new ArrayList<String>();
+        final List<String> toSet = new ArrayList<>();
         final ItemMeta meta = this.is.getItemMeta();
         for (final String string : lore) {
             toSet.add(ChatColor.translateAlternateColorCodes('&', string));
         }
-        meta.setLore((List)toSet);
+        meta.setLore(toSet);
         this.is.setItemMeta(meta);
         return this;
     }

@@ -1,10 +1,9 @@
 package fr.erased.clans.commands;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.fly.FlyStorage;
-import fr.erased.clans.manager.ChestManager;
-import fr.erased.clans.manager.ClanManager;
-import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.storage.ChestManager;
+import fr.erased.clans.storage.ClanManager;
+import fr.erased.clans.storage.user.PlayerManager;
 import fr.erased.clans.ui.ClanUI;
 import fr.erased.clans.ui.CreateUI;
 import net.md_5.bungee.api.ChatColor;
@@ -12,17 +11,17 @@ import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class Clan implements CommandExecutor {
+public class Clan extends Command {
 
     private final Main main;
-    private ClanManager clanManager;
-    private PlayerManager playerManager;
+    private final ClanManager clanManager;
+    private final PlayerManager playerManager;
 
-    public Clan(Main main) {
+    public Clan(String name, Main main) {
+        super(name);
         this.main = main;
         clanManager = new ClanManager(main);
         playerManager = new PlayerManager(main);
@@ -30,7 +29,7 @@ public class Clan implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean execute(CommandSender sender, String label, String[] args) {
         Player player = (Player) sender;
 
         if(args.length == 0) {
@@ -43,6 +42,10 @@ public class Clan implements CommandExecutor {
             createUI.openCreateUI();
             return false;
         }
+
+        /*
+        * Invite
+         */
 
         if(args[0].equalsIgnoreCase("invite")){
             if(args.length != 2) {
@@ -95,6 +98,10 @@ public class Clan implements CommandExecutor {
             return false;
         }
 
+        /*
+        * Join
+         */
+
         if(args[0].equalsIgnoreCase("join")){
             if(args.length != 2) {
                 player.sendMessage("§c/clan join <clan>");
@@ -123,6 +130,10 @@ public class Clan implements CommandExecutor {
             return false;
         }
 
+        /*
+        * Refuse
+         */
+
         if(args[0].equalsIgnoreCase("refuse")){
             if(args.length != 2) {
                 player.sendMessage("§c/clan refuse <clan>");
@@ -149,6 +160,10 @@ public class Clan implements CommandExecutor {
             return false;
         }
 
+        /*
+        * Quit
+         */
+
         if(args[0].equalsIgnoreCase("quit")){
             if(!playerManager.inClan(player)) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
@@ -160,6 +175,10 @@ public class Clan implements CommandExecutor {
             clanUI.quitClanUi(clan);
             return false;
         }
+
+        /*
+        * Claim
+         */
 
         if(args[0].equalsIgnoreCase("claim")){
             if(!playerManager.inClan(player)) {
@@ -184,6 +203,10 @@ public class Clan implements CommandExecutor {
             return false;
         }
 
+        /*
+        * Unclaim
+         */
+
         if(args[0].equalsIgnoreCase("unclaim")){
             if(!playerManager.inClan(player)) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
@@ -207,6 +230,10 @@ public class Clan implements CommandExecutor {
             main.getChunkManager().unClaimChunk(player);
         }
 
+        /*
+        * Unclaimall
+         */
+
         if(args[0].equalsIgnoreCase("unclaimall")){
             if(!playerManager.inClan(player)) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
@@ -222,11 +249,14 @@ public class Clan implements CommandExecutor {
             }
 
             main.getChunkManager().removeAllClaimsForClan(playerManager.getClan(player));
-            main.getClanManager().removeAllChunks(playerManager.getClan(player));
+            main.getClanManager().removeAllClaims(playerManager.getClan(player));
 
             player.sendMessage("§c§l» §7Vous avez unclaim tous les chunks de votre clan");
         }
 
+        /*
+        * Ally
+         */
 
         if(args[0].equalsIgnoreCase("ally")){
             if(args.length != 2) {
@@ -263,6 +293,10 @@ public class Clan implements CommandExecutor {
             return false;
         }
 
+        /*
+        * Create
+         */
+
         if(args[0].equalsIgnoreCase("create")){
             if(args.length != 1){
                 player.sendMessage("§c/clan create");
@@ -277,6 +311,10 @@ public class Clan implements CommandExecutor {
             CreateUI createUI = new CreateUI(player, main);
             createUI.openCreateUI();
         }
+
+        /*
+        * Fly
+         */
 
         if(args[0].equalsIgnoreCase("fly")){
 
@@ -298,15 +336,13 @@ public class Clan implements CommandExecutor {
                 return true;
             }
 
-            FlyStorage flyStorage = new FlyStorage();
-
-            if(flyStorage.isFly(player)) {
+            if(playerManager.isFly(player)) {
                 player.setAllowFlight(false);
-                flyStorage.setFly(player, false);
+                playerManager.removeFly(player);
                 player.sendMessage("§e§lErased§6§lClans §7» §eVous ne pouvez plus voler dans vos claims");
             } else {
                 player.setAllowFlight(true);
-                flyStorage.setFly(player, true);
+                playerManager.addFly(player);
                 player.sendMessage("§e§lErased§6§lClans §7» §eVous pouvez désormais voler dans vos claims");
             }
 
@@ -314,8 +350,12 @@ public class Clan implements CommandExecutor {
 
         }
 
+        /*
+        * Chest
+         */
+
         if(args[0].equalsIgnoreCase("chest")){
-            if(main.getPlayerManager().getClan(player) == "null"){
+            if(main.getPlayerManager().getClan(player).equals("null")){
                 sender.sendMessage("§cVous n'êtes pas dans un clan !");
                 return true;
             }
@@ -324,6 +364,7 @@ public class Clan implements CommandExecutor {
             chestManager.openChest();
             return false;
         }
+
         return false;
     }
 

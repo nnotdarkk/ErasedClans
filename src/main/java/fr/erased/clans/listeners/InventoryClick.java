@@ -1,9 +1,9 @@
-package fr.erased.clans.events;
+package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.quests.QuestsUI;
-import fr.erased.clans.manager.ClanManager;
-import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.ui.QuestsUI;
+import fr.erased.clans.storage.ClanManager;
+import fr.erased.clans.storage.user.PlayerManager;
 import fr.erased.clans.ui.ClanUI;
 import fr.erased.clans.utils.ChatUtils;
 import org.bukkit.entity.Player;
@@ -62,7 +62,7 @@ public class InventoryClick implements Listener {
 
                 case BOOK:
                     QuestsUI questsUI= new QuestsUI(main, player);
-                    questsUI.openEasyQuestsUI(playerManager.getClan(player));
+                    //questsUI.openEasyQuestsUI(playerManager.getClan(player));
                     break;
             }
         }

@@ -1,30 +1,26 @@
-package fr.erased.clans.manager;
+package fr.erased.clans.storage.user;
 
 import fr.erased.clans.Main;
+import fr.erased.clans.storage.enums.PlayerRank;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class PlayerManager {
 
     private final Main main;
 
+    private static List<Player> createState = new ArrayList<>();
+    private static List<Player> fly = new ArrayList<>();
+
     public PlayerManager(Main main) {
         this.main = main;
-    }
-
-    private static HashMap<Player, Boolean> createState = new HashMap<>();
-
-    public void setState(Player player, boolean state){
-        createState.put(player, state);
-    }
-
-    public boolean isState(Player player){
-        return createState.get(player);
     }
 
     public void registerPlayer(Player player){
@@ -46,6 +42,7 @@ public class PlayerManager {
 
             f.set("name", player.getName());
             f.set("clan", "null");
+            f.set("rank", "null");
             try {
                 f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
             } catch (IOException e) {
@@ -58,6 +55,7 @@ public class PlayerManager {
         FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
 
         f.set("clan", name);
+        f.set("rank", PlayerRank.MEMBRE.toString());
         try {
             f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
         } catch (IOException e) {
@@ -70,6 +68,7 @@ public class PlayerManager {
         FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
 
         f.set("clan", "null");
+        f.set("rank", "null");
         try {
             f.save(main.getFileManager().getFile("userdata", uuid));
         } catch (IOException e) {
@@ -97,5 +96,29 @@ public class PlayerManager {
         } else {
             return true;
         }
+    }
+
+    public void addCreateState(Player player){
+        createState.add(player);
+    }
+
+    public void removeCreateState(Player player){
+        createState.remove(player);
+    }
+
+    public boolean isInCreateState(Player player){
+        return createState.contains(player);
+    }
+
+    public void addFly(Player player){
+        fly.add(player);
+    }
+
+    public void removeFly(Player player){
+        fly.remove(player);
+    }
+
+    public boolean isFly(Player player){
+        return fly.contains(player);
     }
 }

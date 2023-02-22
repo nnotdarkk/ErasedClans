@@ -1,9 +1,8 @@
 package fr.erased.clans.ui;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.enums.QuestDifficulty;
-import fr.erased.clans.manager.ClanManager;
-import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.storage.ClanManager;
+import fr.erased.clans.storage.user.PlayerManager;
 import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

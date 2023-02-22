@@ -1,7 +1,6 @@
-package fr.erased.clans.manager;
+package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.enums.QuestDifficulty;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
@@ -25,14 +24,13 @@ public class ClanManager {
         this.main = main;
     }
 
+    @SneakyThrows
     public void createClan(Player owner, String name) {
         main.getFileManager().createFile("clans", name);
 
         YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
 
         List<String> members = new ArrayList<>();
-        boolean[] setter = new boolean[10];
-        int[] setter2 = new int[10];
 
         Map<Integer, ItemStack> chest = new HashMap<>();
         Inventory inv = Bukkit.createInventory(null, 54, "new-inv");
@@ -40,28 +38,30 @@ public class ClanManager {
             chest.put(slot, inv.getItem(slot));
         }
 
-
         members.add(owner.getUniqueId().toString());
         f.set("name", name);
         f.set("owner", owner.getUniqueId().toString());
         f.set("members", members);
         f.set("xp", 0);
         f.createSection("chest", chest);
-        f.set("quests.stats.easy", setter);
-        f.set("quests.stats.medium", setter);
-        f.set("quests.stats.hard", setter);
-        f.set("quests.easy", setter2);
-        f.set("quests.medium", setter2);
-        f.set("quests.hard", setter2);
+        f.set("base", null);
         f.set("allies", new ArrayList<>());
         f.set("claims", null);
-        try {
-            f.save(main.getFileManager().getFile("clans", name));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
+        f.save(main.getFileManager().getFile("clans", name));
         main.getPlayerManager().registerClan(owner, name);
+    }
+
+    public void addInvitation(Player player, String clan){
+        invitation.put(clan, player);
+    }
+
+    public void removeInvitation(Player player, String clan){
+        invitation.remove(clan, player);
+    }
+
+    public boolean hasInvitation(Player player, String clan){
+        return invitation.containsKey(clan) && invitation.containsValue(player);
     }
 
     public Inventory getClanChest(String clan){
@@ -84,17 +84,6 @@ public class ClanManager {
         }
         f.set("chest", chest);
         f.save(main.getFileManager().getFile("clans", clan));
-    }
-    public void addInvitation(Player player, String clan){
-        invitation.put(clan, player);
-    }
-
-    public void removeInvitation(Player player, String clan){
-        invitation.remove(clan, player);
-    }
-
-    public boolean hasInvitation(Player player, String clan){
-        return invitation.containsKey(clan) && invitation.containsValue(player);
     }
 
     public int getClanMaxClaims(String clan){
@@ -143,10 +132,6 @@ public class ClanManager {
         return list;
     }
 
-    public int getClansCount(){
-        return getClans().size();
-    }
-
     public void setClanXp(String clan, int xp){
         YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
         f.set("xp", xp);
@@ -163,22 +148,16 @@ public class ClanManager {
     }
 
     public void addClanXp(String clan, int xp){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-        f.set("xp", f.getInt("xp") + xp);
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        setClanXp(clan, getClanXp(clan) + xp);
     }
 
     public int getClanLevel(String clan){
-        int a = 100;
+        int a = 1000;
         int xp = getClanXp(clan);
         int level = 1;
         while (xp >= a){
             xp -= a;
-            a += 100;
+            a += 500;
             level++;
         }
         if(level > 100){
@@ -188,13 +167,13 @@ public class ClanManager {
     }
 
     public int getClanExpToNextLevel(String clan){
-        int a = 100;
+        int a = 1000;
         int level = getClanLevel(clan);
         int b = 1;
         for(int i = 1; i < level; i++){
             b = b + 1;
             for (int j = 0; j < b; j++) {
-                a += 100;
+                a += 500;
             }
         }
         return a;
@@ -219,130 +198,6 @@ public class ClanManager {
 
     public boolean clanExists(String clan){
         return main.getFileManager().getFile("clans", clan).exists();
-    }
-
-    public boolean getQuestList(String clan, QuestDifficulty questDifficulty, int quest){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-        if(questDifficulty == QuestDifficulty.Facile){
-            List<Boolean> stats = f.getBooleanList("quests.stats.easy");
-            return stats.get(quest);
-        } else if(questDifficulty == QuestDifficulty.Moyen){
-            List<Boolean> stats = f.getBooleanList("quests.stats.medium");
-            return stats.get(quest);
-        } else if(questDifficulty == QuestDifficulty.Difficile){
-            List<Boolean> stats = f.getBooleanList("quests.stats.hard");
-            return stats.get(quest);
-        }
-        return false;
-    }
-
-    public String getStringQuestCompleted(String clan, QuestDifficulty questDifficulty, int quest){
-        if(getQuestList(clan, questDifficulty, quest)){
-            return "§aTerminée";
-        } else {
-            return "§cNon terminée";
-        }
-    }
-
-    public void setQuestList(String clan, QuestDifficulty questDifficulty, int quest, boolean bool){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-        if(questDifficulty == QuestDifficulty.Facile){
-            List<Boolean> stats = f.getBooleanList("quests.stats.easy");
-            stats.set(quest, bool);
-            f.set("quests.stats.easy", stats);
-        } else if(questDifficulty == QuestDifficulty.Moyen){
-            List<Boolean> stats = f.getBooleanList("quests.stats.medium");
-            stats.set(quest, bool);
-            f.set("quests.stats.easy", stats);
-        } else if(questDifficulty == QuestDifficulty.Difficile){
-            List<Boolean> stats = f.getBooleanList("quests.stats.hard");
-            stats.set(quest, bool);
-            f.set("quests.stats.easy", stats);
-        }
-
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public int getQuestListCompleted(String clan, QuestDifficulty difficulty){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-        int i = 0;
-
-        if(difficulty == QuestDifficulty.Facile){
-            for(boolean b : f.getBooleanList("quests.stats.easy")){
-                if(b) i++;
-            }
-        } else if(difficulty == QuestDifficulty.Moyen){
-            for(boolean b : f.getBooleanList("quests.stats.medium")){
-                if(b) i++;
-            }
-        } else if(difficulty == QuestDifficulty.Difficile){
-            for(boolean b : f.getBooleanList("quests.stats.hard")){
-                if(b) i++;
-            }
-        }
-        return i;
-    }
-
-    public int getQuestInt(String clan, QuestDifficulty questDifficulty, int quest){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-        if(questDifficulty == QuestDifficulty.Facile){
-            List<Integer> stats = f.getIntegerList("quests.easy");
-            return stats.get(quest);
-        } else if(questDifficulty == QuestDifficulty.Moyen){
-            List<Integer> stats = f.getIntegerList("quests.medium");
-            return stats.get(quest);
-        } else if(questDifficulty == QuestDifficulty.Difficile){
-            List<Integer> stats = f.getIntegerList("quests.hard");
-            return stats.get(quest);
-        }
-        return 0;
-    }
-
-    public Integer getLimitQuest(QuestDifficulty difficulty, int quest){
-        switch (difficulty){
-            case Facile:
-                switch (quest){
-                    case 1:
-                        return 10;
-
-                    case 2:
-                        return 250;
-
-                    case 3:
-                        return 50;
-
-                    case 4:
-                        return 25;
-
-                    case 5:
-                        return 15;
-
-                    case 6:
-                        return 20;
-
-                    case 7:
-                        return 300;
-
-                    case 8:
-                        return 20;
-
-                    case 9: case 10:
-                        return 1;
-                }
-                break;
-
-            case Moyen:
-                break;
-
-            case Difficile:
-                break;
-        }
-
-        return null;
     }
 
     public void removeClan(String name) {
@@ -434,7 +289,7 @@ public class ClanManager {
         return f.getStringList("claims");
     }
 
-    public void removeAllChunks(String name){
+    public void removeAllClaims(String name){
         YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
         f.set("claims", new ArrayList<>());
         try {

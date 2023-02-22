@@ -1,9 +1,8 @@
-package fr.erased.clans.fly;
+package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.storage.user.PlayerManager;
 import org.bukkit.Chunk;
-import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,7 +22,6 @@ public class FlyListeners implements Listener {
         Chunk to = e.getTo().getChunk();
 
         PlayerManager playerManager = new PlayerManager(main);
-        FlyStorage flyStorage = new FlyStorage();
 
         Player player = e.getPlayer();
 
@@ -34,9 +32,9 @@ public class FlyListeners implements Listener {
                     player.sendTitle("", "§7Vous sortez du clan §6" + main.getChunkManager().getClaimer(from), 10, 20, 10);
                 }
 
-                if(flyStorage.isFly(player)){
+                if(playerManager.isFly(player)){
                     player.setAllowFlight(false);
-                    flyStorage.setFly(e.getPlayer(), false);
+                    playerManager.setFly(e.getPlayer(), false);
                     player.sendMessage("§cVotre fly à été désactivé car vous avez quitté votre claim.");
                 }
 
@@ -48,9 +46,9 @@ public class FlyListeners implements Listener {
                 String playerclan = playerManager.getClan(e.getPlayer());
 
                 if(!claimer.equals(playerclan)){
-                    if(flyStorage.isFly(player)){
+                    if(playerManager.isFly(player)){
                         player.setAllowFlight(false);
-                        flyStorage.setFly(e.getPlayer(), false);
+                        playerManager.setFly(e.getPlayer(), false);
                         player.sendMessage("§cVotre fly à été désactivé car vous avez quitté votre claim.");
                     }
                 }

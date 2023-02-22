@@ -12,10 +12,9 @@ import java.util.List;
 public class TabClan implements TabCompleter {
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command cmd, String label, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String label, String[] args) {
 
         List<String> list = new ArrayList<>();
-        List<String> playersName = new ArrayList<>();
 
         if(args.length == 1) {
             list.add("invite");
@@ -32,13 +31,6 @@ public class TabClan implements TabCompleter {
             return list;
         }
 
-        if(args.length == 2){
-            for(Player player : Bukkit.getOnlinePlayers()){
-                playersName.add(player.getName());
-            }
-            return playersName;
-        }
         return null;
     }
-
 }

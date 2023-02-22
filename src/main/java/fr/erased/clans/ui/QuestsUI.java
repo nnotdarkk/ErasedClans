@@ -1,7 +1,6 @@
-package fr.erased.clans.quests;
+package fr.erased.clans.ui;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.enums.QuestDifficulty;
 import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -22,7 +21,7 @@ public class QuestsUI {
         this.player = player;
     }
 
-    public void openEasyQuestsUI(String clan){
+    /*public void openEasyQuestsUI(String clan){
         Inventory inv = Bukkit.createInventory(null, 54, "Quêtes: §afaciles");
 
         ItemStack vitre = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ").build(false);
@@ -161,5 +160,5 @@ public class QuestsUI {
 
     public void openHardQuestsUI(){
 
-    }
+    }*/
 }

@@ -1,16 +1,13 @@
-package fr.erased.clans.events;
+package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.manager.ChestManager;
+import fr.erased.clans.storage.ChestManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryInteractEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
-import org.checkerframework.checker.units.qual.C;
 
 public class ClanChestInteract implements Listener {
 
