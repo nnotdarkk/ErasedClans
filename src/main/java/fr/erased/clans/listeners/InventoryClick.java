@@ -14,11 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class InventoryClick implements Listener {
 
     private final Main main;
-    private ClanManager clanManager;
 
     public InventoryClick(Main main) {
         this.main = main;
-        clanManager = new ClanManager(main);
     }
 
     @EventHandler
@@ -27,19 +25,24 @@ public class InventoryClick implements Listener {
         if(e.getCurrentItem().getItemMeta() == null) return;
 
         Player player = (Player) e.getWhoClicked();
-        PlayerManager playerManager = new PlayerManager(main);
+        PlayerManager playerManager = new PlayerManager(main, player);
+        ClanManager clanManager = new ClanManager(main, playerManager.getClan());
 
-        if(e.getView().getTitle() == "Créer un clan"){
+        if(e.getView().getTitle().equals("Créer un clan")){
             e.setCancelled(true);
             switch (e.getCurrentItem().getType()){
                 case LIME_TERRACOTTA:
+                    if(player.hasPermission("erasedclans.create")){
+                        player.sendMessage("§cErreur: Grade vip requis pour créer un clan, vous pouvez tout de même en rejoindre un.");
+                        return;
+                    }
                     player.closeInventory();
                     player.sendMessage(ChatUtils.getCenteredText("§7 "));
                     player.sendMessage(ChatUtils.getCenteredText("§6§lCRÉATION DE CLAN"));
                     player.sendMessage(ChatUtils.getCenteredText("§7Inscrivez le nom de votre clan dans le chat"));
                     player.sendMessage(ChatUtils.getCenteredText("§7('annuler' pour annuler)"));
                     player.sendMessage(ChatUtils.getCenteredText("§7 "));
-                    new PlayerManager(main).setState(player, true);
+                    playerManager.addCreateState();
                     break;
 
                 case RED_TERRACOTTA:
@@ -56,8 +59,8 @@ public class InventoryClick implements Listener {
                     break;
 
                 case BARRIER:
-                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main);
-                    clanUI.quitClanUi(playerManager.getClan(player));
+                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main, playerManager.getClan());
+                    clanUI.quitClanUi();
                     break;
 
                 case BOOK:
@@ -72,13 +75,13 @@ public class InventoryClick implements Listener {
             switch (e.getCurrentItem().getType()){
                 case LIME_TERRACOTTA:
                     player.closeInventory();
-                    player.sendMessage("§cVous avez quitté le clan " + playerManager.getClan(player));
-                    clanManager.removeMember(playerManager.getClan(player), player);
-                    playerManager.unregisterClan(player.getUniqueId().toString());
+                    player.sendMessage("§cVous avez quitté le clan " + playerManager.getClan());
+                    clanManager.removeMember(player);
+                    playerManager.unregisterClan();
                     break;
                 case RED_TERRACOTTA:
-                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main);
-                    clanUI.openClanUI(playerManager.getClan(player));
+                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main, playerManager.getClan());
+                    clanUI.openClanUI();
                     break;
 
             }
@@ -90,8 +93,8 @@ public class InventoryClick implements Listener {
                 case ARROW:
                     e.setCancelled(true);
                     player.closeInventory();
-                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main);
-                    clanUI.openClanUI(playerManager.getClan(player));
+                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main, playerManager.getClan());
+                    clanUI.openClanUI();
                     break;
             }
         }

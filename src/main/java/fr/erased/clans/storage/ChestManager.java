@@ -1,6 +1,7 @@
 package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
+import fr.erased.clans.storage.user.PlayerManager;
 import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -8,25 +9,23 @@ import org.bukkit.inventory.Inventory;
 
 public class ChestManager {
 
-    private final Main main;
     private final Player player;
+    private final ClanManager clanManager;
 
     public ChestManager(Main main, Player player) {
-        this.main = main;
         this.player = player;
+        this.clanManager = new ClanManager(main, new PlayerManager(main, player).getClan());
     }
 
     public void openChest(){
-        String clan = main.getPlayerManager().getClan(player);
-        Inventory inv = main.getClanManager().getClanChest(clan);
+        Inventory inv = clanManager.getClanChest();
         inv = addGlass(inv);
 
         player.openInventory(inv);
     }
 
     public Inventory addGlass(Inventory inv){
-        String clan = main.getPlayerManager().getClan(player);
-        int level = main.getClanManager().getClanLevel(clan);
+        int level = clanManager.getClanLevel();
 
         if(level < 100){
             for (int i = 45; i < 54; i++) {

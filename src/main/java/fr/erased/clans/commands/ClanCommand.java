@@ -11,34 +11,32 @@ import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
-public class Clan extends Command {
+public class ClanCommand implements CommandExecutor {
 
     private final Main main;
-    private final ClanManager clanManager;
-    private final PlayerManager playerManager;
 
-    public Clan(String name, Main main) {
-        super(name);
+    public ClanCommand(Main main) {
         this.main = main;
-        clanManager = new ClanManager(main);
-        playerManager = new PlayerManager(main);
-
     }
 
     @Override
-    public boolean execute(CommandSender sender, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         Player player = (Player) sender;
+        PlayerManager playerManager = new PlayerManager(main, player);
 
         if(args.length == 0) {
-            ClanUI clanUI = new ClanUI(player, main);
-            CreateUI createUI = new CreateUI(player, main);
-            if(playerManager.inClan(player)) {
-                clanUI.openClanUI(playerManager.getClan(player));
+            if(playerManager.inClan()) {
+                ClanUI clanUI = new ClanUI(player, main, playerManager.getClan());
+                clanUI.openClanUI();
                 return false;
             }
+
+            CreateUI createUI = new CreateUI(player, main);
             createUI.openCreateUI();
             return false;
         }
@@ -47,13 +45,15 @@ public class Clan extends Command {
         * Invite
          */
 
+        ClanManager clanManager = new ClanManager(main, playerManager.getClan());
+
         if(args[0].equalsIgnoreCase("invite")){
             if(args.length != 2) {
                 player.sendMessage("§c/clan invite <joueur>");
                 return false;
             }
 
-            if(!playerManager.inClan(player)) {
+            if(!playerManager.inClan()) {
                 player.sendMessage("§cVous n'avez pas de clan");
                 return false;
             }
@@ -64,20 +64,20 @@ public class Clan extends Command {
                 return false;
             }
 
-            String ownerid = clanManager.getOwner(playerManager.getClan(player));
-            String playerid = player.getUniqueId().toString();
+            String ownerId = clanManager.getOwner();
+            String playerId = player.getUniqueId().toString();
 
-            if(!ownerid.equals(playerid)) {
+            if(!ownerId.equals(playerId)) {
                 player.sendMessage("§cVous n'êtes pas le propriétaire de ce clan");
                 return false;
             }
 
-            if(playerManager.inClan(target)){
+            if(playerManager.inClan()){
                 player.sendMessage("§cCe joueur est déjà dans un clan");
                 return false;
             }
 
-            String clan = playerManager.getClan(player);
+            String clan = playerManager.getClan();
 
             TextComponent accepter = new TextComponent("ACCEPTER");
             accepter.setColor(ChatColor.GREEN);
@@ -94,7 +94,7 @@ public class Clan extends Command {
             target.sendMessage("§7Vous avez été invité dans le clan §e" + clan + "§7 par §e" + player.getName());
             target.spigot().sendMessage(accepter, new TextComponent(" §8▏ "), refuser);
             sender.sendMessage("§aVous avez invité " + target.getName() + " dans votre clan");
-            clanManager.addInvitation(target, clan);
+            clanManager.addInvitation(target);
             return false;
         }
 
@@ -108,22 +108,22 @@ public class Clan extends Command {
                 return false;
             }
 
-            if(playerManager.inClan(player)) {
+            if(playerManager.inClan()) {
                 player.sendMessage("§cVous êtes déjà dans un clan");
                 return false;
             }
 
             String clan = args[1];
-            if(!clanManager.hasInvitation(player, clan)) {
+            if(!clanManager.hasInvitation(player)) {
                 player.sendMessage("§cVous n'avez pas d'invitation pour ce clan");
                 return false;
             }
 
-            clanManager.removeInvitation(player, clan);
-            clanManager.addMember(clan, player);
+            clanManager.removeInvitation(player);
+            clanManager.addMember(player);
 
             player.sendMessage("§aVous avez rejoint le clan " + clan);
-            Player player1 = Bukkit.getPlayer(clanManager.getOwner(clan));
+            Player player1 = Bukkit.getPlayer(clanManager.getOwner());
             if(player1 != null) {
                 player1.sendMessage("§a" + player.getName() + " a accepté votre invitation");
             }
@@ -140,20 +140,20 @@ public class Clan extends Command {
                 return false;
             }
 
-            if(playerManager.inClan(player)) {
+            if(playerManager.inClan()) {
                 player.sendMessage("§cVous êtes déjà dans un clan");
                 return false;
             }
 
             String clan = args[1];
-            if(!clanManager.hasInvitation(player, clan)) {
+            if(!clanManager.hasInvitation(player)) {
                 player.sendMessage("§cVous n'avez pas d'invitation pour ce clan");
                 return false;
             }
 
-            clanManager.removeInvitation(player, clan);
+            clanManager.removeInvitation(player);
             player.sendMessage("§cVous avez refusé l'invitation du clan " + clan);
-            Player player1 = Bukkit.getPlayer(clanManager.getOwner(clan));
+            Player player1 = Bukkit.getPlayer(clanManager.getOwner());
             if(player1 != null) {
                 player1.sendMessage("§c" + player.getName() + " a refusé votre invitation");
             }
@@ -165,14 +165,13 @@ public class Clan extends Command {
          */
 
         if(args[0].equalsIgnoreCase("quit")){
-            if(!playerManager.inClan(player)) {
+            if(!playerManager.inClan()) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
                 return false;
             }
 
-            String clan = playerManager.getClan(player);
-            ClanUI clanUI = new ClanUI(player, main);
-            clanUI.quitClanUi(clan);
+            ClanUI clanUI = new ClanUI(player, main, playerManager.getClan());
+            clanUI.quitClanUi();
             return false;
         }
 
@@ -181,7 +180,7 @@ public class Clan extends Command {
          */
 
         if(args[0].equalsIgnoreCase("claim")){
-            if(!playerManager.inClan(player)) {
+            if(!playerManager.inClan()) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
                 return false;
             }
@@ -192,13 +191,13 @@ public class Clan extends Command {
                 return false;
             }
 
-            int claimsmax = main.getClanManager().getClanMaxClaims(playerManager.getClan(player));
-            int claims = main.getClanManager().getClaims(playerManager.getClan(player)).size();
-            if(claims >= claimsmax) {
+            int claimsMax = clanManager.getClanMaxClaims();
+            int claims = clanManager.getClaims().size();
+            if(claims >= claimsMax) {
                 player.sendMessage("§cVous avez atteint le nombre maximum de claims");
                 return false;
             }
-            main.getChunkManager().claimChunk(player, playerManager.getClan(player));
+            main.getChunkManager().claimChunk(player, playerManager.getClan());
             player.sendMessage("§a§l» §7Vous avez claim ce chunk avec succès");
             return false;
         }
@@ -208,7 +207,7 @@ public class Clan extends Command {
          */
 
         if(args[0].equalsIgnoreCase("unclaim")){
-            if(!playerManager.inClan(player)) {
+            if(!playerManager.inClan()) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
                 return false;
             }
@@ -220,7 +219,7 @@ public class Clan extends Command {
             }
 
             String claimer = main.getChunkManager().getClaimer(chunk);
-            String clan = playerManager.getClan(player);
+            String clan = playerManager.getClan();
             if(!claimer.equals(clan)) {
                 player.sendMessage("§cCe chunk n'est pas claim par votre clan");
                 return false;
@@ -235,21 +234,21 @@ public class Clan extends Command {
          */
 
         if(args[0].equalsIgnoreCase("unclaimall")){
-            if(!playerManager.inClan(player)) {
+            if(!playerManager.inClan()) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
                 return false;
             }
 
-            String ownerid = clanManager.getOwner(playerManager.getClan(player));
-            String playerid = player.getUniqueId().toString();
+            String ownerId = clanManager.getOwner();
+            String playerId = player.getUniqueId().toString();
 
-            if(!ownerid.equals(playerid)) {
+            if(!ownerId.equals(playerId)) {
                 player.sendMessage("§cVous n'êtes pas le propriétaire de ce clan");
                 return false;
             }
 
-            main.getChunkManager().removeAllClaimsForClan(playerManager.getClan(player));
-            main.getClanManager().removeAllClaims(playerManager.getClan(player));
+            main.getChunkManager().removeAllClaimsForClan(playerManager.getClan());
+            clanManager.removeAllClaims();
 
             player.sendMessage("§c§l» §7Vous avez unclaim tous les chunks de votre clan");
         }
@@ -264,15 +263,15 @@ public class Clan extends Command {
                 return false;
             }
 
-            if(!playerManager.inClan(player)) {
+            if(!playerManager.inClan()) {
                 player.sendMessage("§cVous n'êtes pas dans un clan");
                 return false;
             }
 
-            String ownerid = clanManager.getOwner(playerManager.getClan(player));
-            String playerid = player.getUniqueId().toString();
+            String ownerId = clanManager.getOwner();
+            String playerId = player.getUniqueId().toString();
 
-            if(!ownerid.equals(playerid)) {
+            if(!ownerId.equals(playerId)) {
                 player.sendMessage("§cVous n'êtes pas le propriétaire de ce clan");
                 return false;
             }
@@ -282,14 +281,14 @@ public class Clan extends Command {
                 return false;
             }
 
-            if(clanManager.getAllies(playerManager.getClan(player)).contains(args[1])) {
+            if(clanManager.getAllies().contains(args[1])) {
                 player.sendMessage("§cVous n'êtes plus alliés avec: " + args[1]);
-                clanManager.removeAllies(playerManager.getClan(player), args[1]);
+                clanManager.removeAlly(args[1]);
                 return false;
             }
 
             player.sendMessage("§aVous êtes désormais alliés avec: " + args[1]);
-            clanManager.addAllies(playerManager.getClan(player), args[1]);
+            clanManager.addAlly(args[1]);
             return false;
         }
 
@@ -303,7 +302,7 @@ public class Clan extends Command {
                 return false;
             }
 
-            if(playerManager.inClan(player)) {
+            if(playerManager.inClan()) {
                 player.sendMessage("§cVous êtes déjà dans un clan");
                 return false;
             }
@@ -329,20 +328,20 @@ public class Clan extends Command {
             }
 
             String claimer = main.getChunkManager().getClaimer(player.getLocation().getChunk());
-            String playerclan = main.getPlayerManager().getClan(player);
+            String playerClan = playerManager.getClan();
 
-            if(!claimer.equals(playerclan)){
+            if(!claimer.equals(playerClan)){
                 sender.sendMessage("§cVous ne pouvez pas activer le fly dans une zone claim par un autre clan !");
                 return true;
             }
 
-            if(playerManager.isFly(player)) {
+            if(playerManager.isFly()) {
                 player.setAllowFlight(false);
-                playerManager.removeFly(player);
+                playerManager.removeFly();
                 player.sendMessage("§e§lErased§6§lClans §7» §eVous ne pouvez plus voler dans vos claims");
             } else {
                 player.setAllowFlight(true);
-                playerManager.addFly(player);
+                playerManager.addFly();
                 player.sendMessage("§e§lErased§6§lClans §7» §eVous pouvez désormais voler dans vos claims");
             }
 
@@ -355,7 +354,7 @@ public class Clan extends Command {
          */
 
         if(args[0].equalsIgnoreCase("chest")){
-            if(main.getPlayerManager().getClan(player).equals("null")){
+            if(playerManager.getClan().equals("null")){
                 sender.sendMessage("§cVous n'êtes pas dans un clan !");
                 return true;
             }

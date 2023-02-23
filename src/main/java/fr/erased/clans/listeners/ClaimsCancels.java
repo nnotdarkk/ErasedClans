@@ -1,6 +1,7 @@
 package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
+import fr.erased.clans.storage.ClanManager;
 import org.bukkit.Chunk;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -25,7 +26,7 @@ public class ClaimsCancels implements Listener {
             String uuid = e.getPlayer().getUniqueId().toString();
             Chunk chunk = e.getPlayer().getLocation().getChunk();
             String clan = main.getChunkManager().getClaimer(chunk);
-            if(!main.getClanManager().getMembers(clan).contains(uuid)){
+            if(!new ClanManager(main, clan).getMembers().contains(uuid)){
                 e.setCancelled(true);
                 e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
             }
@@ -38,7 +39,7 @@ public class ClaimsCancels implements Listener {
             String uuid = e.getPlayer().getUniqueId().toString();
             Chunk chunk = e.getPlayer().getLocation().getChunk();
             String clan = main.getChunkManager().getClaimer(chunk);
-            if(!main.getClanManager().getMembers(clan).contains(uuid)){
+            if(!new ClanManager(main, clan).getMembers().contains(uuid)){
                 e.setCancelled(true);
                 e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
             }
@@ -53,7 +54,7 @@ public class ClaimsCancels implements Listener {
             String uuid = e.getPlayer().getUniqueId().toString();
             Chunk chunk = e.getPlayer().getLocation().getChunk();
             String clan = main.getChunkManager().getClaimer(chunk);
-            if(!main.getClanManager().getMembers(clan).contains(uuid)){
+            if(!new ClanManager(main, clan).getMembers().contains(uuid)){
                 e.setCancelled(true);
                 e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
             }

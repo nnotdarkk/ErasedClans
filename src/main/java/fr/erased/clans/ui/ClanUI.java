@@ -16,29 +16,31 @@ import java.util.List;
 
 public class ClanUI {
 
-    private final Main main;
-    private final ClanManager clanManager;
-    private final PlayerManager playerManager;
     private final Player player;
+    private final Main main;
+    private final String name;
 
-    public ClanUI(Player player, Main main) {
+    private final ClanManager clanManager;
+
+    public ClanUI(Player player, Main main, String name) {
         this.main = main;
-        clanManager = new ClanManager(main);
-        playerManager = new PlayerManager(main);
         this.player = player;
+        this.name = name;
+
+        this.clanManager = new ClanManager(main, name);
     }
 
     public int percent(double currentValue, double maxValue){
         return (int) ((currentValue/maxValue) *100);
     }
 
-    public void openClanUI(String name){
-        Inventory inv = Bukkit.createInventory(null, 54, "Clan: " + name + " [" + clanManager.getMembers(name).size() + "/15]");
+    public void openClanUI(){
+        Inventory inv = Bukkit.createInventory(null, 54, "Clan: " + name + " [" + clanManager.getMembers().size() + "/15]");
 
-        String ownerid = clanManager.getOwner(name);
-        String owner = main.getPlayerManager().getNameByUUID(ownerid);
+        String ownerid = clanManager.getOwner();
+        String owner = new PlayerManager(main, ownerid).getName();
 
-        int percent = percent(clanManager.getClanXp(name), clanManager.getClanExpToNextLevel(name));
+        int percent = percent(clanManager.getClanXp(), clanManager.getClanExpToNextLevel());
 
         StringBuilder p = new StringBuilder();
         p.append("§8[");
@@ -53,10 +55,10 @@ public class ClanUI {
 
         List<String> allies = new ArrayList<>();
 
-        if(clanManager.getAllies(name).size() == 0){
+        if(clanManager.getAllies().size() == 0){
             allies.add("§cAucun");
         } else {
-            for(String ally : clanManager.getAllies(name)){
+            for(String ally : clanManager.getAllies()){
                 allies.add("§a" + ally);
             }
         }
@@ -65,8 +67,8 @@ public class ClanUI {
                 " ",
                 "§8▪ §7Statut: §3" + owner,
                 "§8▪ §7Chef: §3" + owner,
-                "§8▪ §7Membres: §b" + clanManager.getMembers(name).size(),
-                "§8▪ §7Niveau: §e" + clanManager.getClanLevel(name),
+                "§8▪ §7Membres: §b" + clanManager.getMembers().size(),
+                "§8▪ §7Niveau: §e" + clanManager.getClanLevel(),
                 "  " + p + " §8" + percent + "%",
                 "§8▪ §7Alliés:" + allies.toString().replaceAll("\\[", "").replaceAll("]", "")
         )).build(false);
@@ -127,7 +129,7 @@ public class ClanUI {
         player.openInventory(inv);
     }
 
-    public void quitClanUi(String name){
+    public void quitClanUi(){
         Inventory inv = Bukkit.createInventory(null, 27, "Quitter le clan " + name + " ?");
 
         ItemStack create = new ItemBuilder(Material.LIME_TERRACOTTA).setDisplayName("§aQuitter le clan").build(false);

@@ -9,20 +9,21 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerConnection implements Listener {
 
-    private final PlayerManager playerManager;
+    private final Main main;
 
     public PlayerConnection(Main main) {
-        playerManager = new PlayerManager(main);
+        this.main = main;
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e){
-        playerManager.registerPlayer(e.getPlayer());
+        new PlayerManager(main, e.getPlayer()).registerPlayer();
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e){
-        playerManager.removeFly(e.getPlayer());
-        playerManager.removeFly(e.getPlayer());
+        PlayerManager playerManager = new PlayerManager(main, e.getPlayer());
+        playerManager.removeFly();
+        playerManager.removeCreateState();
     }
 }

@@ -36,14 +36,14 @@ public class ChunkManager {
             throw new RuntimeException(e);
         }
 
-        main.getClanManager().addClaim(clan, chunk);
+        new ClanManager(main, clan).addClaim(chunk);
     }
 
     public void unClaimChunk(Player player){
         Chunk chunk = getChunk(player);
-
         String clan = getClaimer(chunk);
-        main.getClanManager().removeClaim(clan, chunk);
+
+        new ClanManager(main, clan).removeClaim(chunk);
 
         YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
         f.set(chunk.toString(), null);

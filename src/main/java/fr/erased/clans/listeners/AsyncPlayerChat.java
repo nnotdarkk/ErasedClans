@@ -12,49 +12,47 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 public class AsyncPlayerChat implements Listener {
 
     private final Main main;
-    private final ClanManager clanManager;
 
     public AsyncPlayerChat(Main main) {
         this.main = main;
-        clanManager = new ClanManager(main);
     }
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e){
-        PlayerManager playerManager = new PlayerManager(main);
         Player player = e.getPlayer();
+        PlayerManager playerManager = new PlayerManager(main, player);
 
-        if(playerManager.isInCreateState(player)){
+        if(playerManager.isInCreateState()){
             e.setCancelled(true);
             if(e.getMessage().equalsIgnoreCase("annuler")){
-                playerManager.removeCreateState(player);
+                playerManager.removeCreateState();
                 player.sendMessage("§cVous avez annulé la création de votre clan");
                 return;
             }
 
             if(e.getMessage().length() < 3){
                 player.sendMessage("§cLe nom de votre clan doit faire au moins 3 caractères");
-                playerManager.removeCreateState(player);
+                playerManager.removeCreateState();
                 return;
             }
 
             if(e.getMessage().length() > 16){
                 player.sendMessage("§cLe nom de votre clan ne doit pas dépasser 16 caractères");
-                playerManager.removeCreateState(player);
+                playerManager.removeCreateState();
                 return;
             }
 
 
             if(new FileUtils(main).fileExists("clans", e.getMessage())){
                 player.sendMessage("§cCe nom est déjà utilisé, création annulée");
-                playerManager.removeCreateState(player);
+                playerManager.removeCreateState();
                 return;
             }
 
-            playerManager.removeCreateState(player);
+            playerManager.removeCreateState();
             player.sendMessage("§aVotre clan a bien été créé ! /clan pour le consulter");
 
-            clanManager.createClan(player, e.getMessage());
+            new ClanManager(main, e.getMessage()).createClan(player);
         }
 
     }

@@ -1,19 +1,16 @@
 package fr.erased.clans;
 
-import fr.erased.clans.commands.Clan;
+import fr.erased.clans.commands.ClanCommand;
+import fr.erased.clans.commands.ClanTabComplete;
 import fr.erased.clans.listeners.*;
 import fr.erased.clans.listeners.FlyListeners;
 import fr.erased.clans.storage.*;
-import fr.erased.clans.storage.user.PlayerManager;
 import fr.erased.clans.utils.FileUtils;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandMap;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.lang.reflect.Field;
 
 public class Main extends JavaPlugin {
 
@@ -22,12 +19,6 @@ public class Main extends JavaPlugin {
 
     @Getter
     private FileUtils fileManager;
-
-    @Getter
-    private PlayerManager playerManager;
-
-    @Getter
-    private ClanManager clanManager;
 
     @Getter
     private ChunkManager chunkManager;
@@ -43,26 +34,15 @@ public class Main extends JavaPlugin {
         pm.registerEvents(new FlyListeners(this), this);
         pm.registerEvents(new ClanChestInteract(this), this);
 
-        registerCommand("erasedclans", new Clan("clan",this));
+        PluginCommand clan = getCommand("clan");
+        clan.setExecutor(new ClanCommand(this));
+        clan.setTabCompleter(new ClanTabComplete());
 
         fileManager = new FileUtils(this);
         fileManager.createFolder("clans");
         fileManager.createFolder("userdata");
         fileManager.createFolder("chunk");
 
-        playerManager = new PlayerManager(this);
-        clanManager = new ClanManager(this);
         chunkManager = new ChunkManager(this);
-    }
-
-    public void registerCommand(String commandName, Command commandClass) {
-        try {
-            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-            bukkitCommandMap.setAccessible(true);
-            CommandMap commandMap = (CommandMap)bukkitCommandMap.get(getServer());
-            commandMap.register(commandName, commandClass);
-        } catch (Exception var5) {
-            var5.printStackTrace();
-        }
     }
 }

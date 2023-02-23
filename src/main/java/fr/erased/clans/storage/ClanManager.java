@@ -1,36 +1,39 @@
 package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
-import lombok.SneakyThrows;
+import fr.erased.clans.storage.user.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class ClanManager {
 
     private final Main main;
+    private final String clan;
+    private final YamlConfiguration f;
 
-    private static HashMap<String, Player> invitation = new HashMap<>();
+    private static final HashMap<String, Player> invitation = new HashMap<>();
 
-    public ClanManager(Main main) {
+    public ClanManager(Main main, String clan) {
         this.main = main;
+        this.clan = clan;
+        this.f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
     }
 
-    @SneakyThrows
-    public void createClan(Player owner, String name) {
-        main.getFileManager().createFile("clans", name);
+    public void createClan(Player owner) {
+        main.getFileManager().createFile("clans", clan);
 
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
 
         List<String> members = new ArrayList<>();
+        members.add(owner.getUniqueId().toString());
 
         Map<Integer, ItemStack> chest = new HashMap<>();
         Inventory inv = Bukkit.createInventory(null, 54, "new-inv");
@@ -38,8 +41,8 @@ public class ClanManager {
             chest.put(slot, inv.getItem(slot));
         }
 
-        members.add(owner.getUniqueId().toString());
-        f.set("name", name);
+        f.set("name", clan);
+        f.set("description", null);
         f.set("owner", owner.getUniqueId().toString());
         f.set("members", members);
         f.set("xp", 0);
@@ -48,25 +51,24 @@ public class ClanManager {
         f.set("allies", new ArrayList<>());
         f.set("claims", null);
 
-        f.save(main.getFileManager().getFile("clans", name));
-        main.getPlayerManager().registerClan(owner, name);
+        saveFile();
+        new PlayerManager(main, owner).registerClan(clan);
     }
 
-    public void addInvitation(Player player, String clan){
+    public void addInvitation(Player player){
         invitation.put(clan, player);
     }
 
-    public void removeInvitation(Player player, String clan){
+    public void removeInvitation(Player player){
         invitation.remove(clan, player);
     }
 
-    public boolean hasInvitation(Player player, String clan){
+    public boolean hasInvitation(Player player){
         return invitation.containsKey(clan) && invitation.containsValue(player);
     }
 
-    public Inventory getClanChest(String clan){
+    public Inventory getClanChest(){
         Inventory inv = Bukkit.createInventory(null, 54, "Coffre du clan: " + clan);
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
         ConfigurationSection chest = f.getConfigurationSection("chest");
         if (chest != null)
             for (String key : chest.getKeys(false)) {
@@ -75,85 +77,40 @@ public class ClanManager {
         return inv;
     }
 
-    @SneakyThrows
-    public void setClanChest(String clan, Inventory inv){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
+    public void setClanChest(Inventory inv){
         Map<Integer, ItemStack> chest = new HashMap<>();
         for (int slot = 0; slot < inv.getSize(); slot++) {
             chest.put(slot, inv.getItem(slot));
         }
         f.set("chest", chest);
-        f.save(main.getFileManager().getFile("clans", clan));
+        saveFile();
     }
 
-    public int getClanMaxClaims(String clan){
-        return getMembers(clan).size() * 10;
+    public Location getClanBase(){
+        return f.getLocation("base");
     }
 
-    public List<File> getClans(){
-        File folder = main.getFileManager().getFolder("clans");
-        return Arrays.asList(folder.listFiles());
-    }
-    
-    public LinkedHashMap<String, Integer> getAllXpClans(){
-        HashMap<String, Integer> map = new HashMap<>();
-        LinkedHashMap<String, Integer> sortedMap = new LinkedHashMap<>();
-        ArrayList<Integer> list = new ArrayList<>();
-
-        for (int i = 0; i < getClans().size(); i++) {
-            File file = getClans().get(i);
-            YamlConfiguration f = YamlConfiguration.loadConfiguration(file);
-            map.put(f.getString("name"), f.getInt("xp"));
-        }
-
-        for (Map.Entry<String, Integer> entry : map.entrySet()) {
-            list.add(entry.getValue());
-        }
-
-        Collections.sort(list);
-
-
-        for (int num : list) {
-            for (Map.Entry<String, Integer> entry : map.entrySet()) {
-                if (entry.getValue().equals(num)) {
-                    sortedMap.put(entry.getKey(), num);
-                }
-            }
-        }
-
-        return sortedMap;
+    public void setClanBase(Location location){
+        f.set("base", location);
+        saveFile();
     }
 
-    public List<String> getAllXpClansToList(){
-        List<String> list = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : getAllXpClans().entrySet()) {
-            list.add(entry.getKey());
-        }
-        return list;
+    public int getClanMaxClaims(){
+        return getMembers().size() * 10;
     }
 
-    public void setClanXp(String clan, int xp){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
+    public void setClanXp(int xp){
         f.set("xp", xp);
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public int getClanXp(String clan){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
+    public int getClanXp(){
         return f.getInt("xp");
     }
 
-    public void addClanXp(String clan, int xp){
-        setClanXp(clan, getClanXp(clan) + xp);
-    }
-
-    public int getClanLevel(String clan){
+    public int getClanLevel(){
         int a = 1000;
-        int xp = getClanXp(clan);
+        int xp = getClanXp();
         int level = 1;
         while (xp >= a){
             xp -= a;
@@ -166,9 +123,9 @@ public class ClanManager {
         return level;
     }
 
-    public int getClanExpToNextLevel(String clan){
+    public int getClanExpToNextLevel(){
         int a = 1000;
-        int level = getClanLevel(clan);
+        int level = getClanLevel();
         int b = 1;
         for(int i = 1; i < level; i++){
             b = b + 1;
@@ -179,190 +136,119 @@ public class ClanManager {
         return a;
     }
 
-    public String getClanMembersString(String clan){
-        if(getMembers(clan).isEmpty()){
-            return "§cAucun";
-        }
-        List<String> members = getMembers(clan);
-        members.remove(getOwner(clan));
-
-        List<String> usernames = new ArrayList<>();
-
-        for (int i = 0; i < members.size(); i++) {
-            String string = main.getPlayerManager().getNameByUUID(members.get(i));
-            usernames.add(string);
-        }
-
-        return usernames.toString().replace("[", "").replace("]", "");
+    public boolean clanExists(){
+        return clanExists(clan);
     }
-
     public boolean clanExists(String clan){
         return main.getFileManager().getFile("clans", clan).exists();
     }
 
-    public void removeClan(String name) {
-        for(String member : getMembers(name)){
-            main.getPlayerManager().unregisterClan(member);
+    public void removeClan() {
+        for(String member : getMembers()){
+            new PlayerManager(main, member).unregisterClan();
         }
 
-        main.getChunkManager().removeAllClaimsForClan(name);
-
-        main.getFileManager().removeFile("clans", name);
+        main.getChunkManager().removeAllClaimsForClan(clan);
+        main.getFileManager().removeFile("clans", clan);
     }
 
-    public List<String> getAllies(String clan) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
+    public List<String> getAllies() {
         return f.getStringList("allies");
     }
 
-    public void addAllies(String clan, String ally) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-
+    public void addAlly(String ally) {
         List<String> allies = f.getStringList("allies");
         allies.add(ally);
         f.set("allies", allies);
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public void removeAllies(String clan, String ally) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
+    public void removeAlly(String ally) {
 
         List<String> allies = f.getStringList("allies");
         allies.remove(ally);
         f.set("allies", allies);
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public List<String> getEnemies(String clan) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-
+    public List<String> getEnemies() {
         return f.getStringList("enemies");
     }
 
-    public void addEnemies(String clan, String enemy) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-
+    public void addEnemies(String enemy) {
         List<String> enemies = f.getStringList("enemies");
         enemies.add(enemy);
         f.set("enemies", enemies);
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public void removeEnemies(String clan, String enemy) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-
+    public void removeEnemies(String enemy) {
         List<String> enemies = f.getStringList("enemies");
         enemies.remove(enemy);
         f.set("enemies", enemies);
-        try {
-            f.save(main.getFileManager().getFile("clans", clan));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public String getOwner(String name) {
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
+    public String getOwner() {
         return f.get("owner").toString();
     }
 
 
-    public List<String> getMembers(String name){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
+    public List<String> getMembers(){
         return f.getStringList("members");
     }
 
-    public List<String> getClaims(String name){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
+    public List<String> getClaims(){
         return f.getStringList("claims");
     }
 
-    public void removeAllClaims(String name){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
+    public void removeAllClaims(){
         f.set("claims", new ArrayList<>());
-        try {
-            f.save(main.getFileManager().getFile("clans", name));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public void addClaim(String name, Chunk chunk){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
-
-        List<String> claims = getClaims(name);
+    public void addClaim(Chunk chunk){
+        List<String> claims = getClaims();
         claims.add(String.valueOf(chunk));
         f.set("claims", claims);
-
-        try {
-            f.save(main.getFileManager().getFile("clans", name));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public void removeClaim(String name, Chunk chunk){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
-
-        List<String> claims = getClaims(name);
+    public void removeClaim(Chunk chunk){
+        List<String> claims = getClaims();
         claims.remove(String.valueOf(chunk));
         f.set("claims", claims);
-
-        try {
-            f.save(main.getFileManager().getFile("clans", name));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
     }
 
-    public void addMember(String name, Player player){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
-
+    public void addMember(Player player){
         List<String> members = f.getStringList("members");
         members.add(player.getUniqueId().toString());
         f.set("members", members);
-        try {
-            f.save(main.getFileManager().getFile("clans", name));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
 
-        main.getPlayerManager().registerClan(player, name);
+        new PlayerManager(main, player).registerClan(clan);
     }
 
-    public void removeMember(String name, Player player){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", name));
-
-        if(getOwner(name).equals(player.getUniqueId().toString())){
-            getMembers(name).forEach(member -> {
-                main.getPlayerManager().unregisterClan(member);
-            });
-            removeClan(name);
-
+    public void removeMember(Player player){
+        if(getOwner().equals(player.getUniqueId().toString())){
+            removeClan();
             return;
         }
 
         List<String> members = f.getStringList("members");
         members.remove(player.getUniqueId().toString());
         f.set("members", members);
+        saveFile();
+
+        new PlayerManager(main, player).unregisterClan();
+    }
+
+    private void saveFile(){
         try {
-            f.save(main.getFileManager().getFile("clans", name));
+            f.save(main.getFileManager().getFile("clans", clan));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-        main.getPlayerManager().unregisterClan(player.getUniqueId().toString());
     }
 }
