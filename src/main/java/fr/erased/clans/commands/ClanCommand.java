@@ -3,7 +3,8 @@ package fr.erased.clans.commands;
 import fr.erased.clans.Main;
 import fr.erased.clans.storage.ChestManager;
 import fr.erased.clans.storage.ClanManager;
-import fr.erased.clans.storage.user.PlayerManager;
+import fr.erased.clans.storage.enums.PlayerRank;
+import fr.erased.clans.storage.PlayerManager;
 import fr.erased.clans.ui.ClanUI;
 import fr.erased.clans.ui.CreateUI;
 import net.md_5.bungee.api.ChatColor;
@@ -31,13 +32,11 @@ public class ClanCommand implements CommandExecutor {
 
         if(args.length == 0) {
             if(playerManager.inClan()) {
-                ClanUI clanUI = new ClanUI(player, main, playerManager.getClan());
-                clanUI.openClanUI();
+                new ClanUI(player, main, playerManager.getClan()).openClanUI();
                 return false;
             }
 
-            CreateUI createUI = new CreateUI(player, main);
-            createUI.openCreateUI();
+            new CreateUI(player, main).openCreateUI();
             return false;
         }
 
@@ -72,8 +71,17 @@ public class ClanCommand implements CommandExecutor {
                 return false;
             }
 
-            if(playerManager.inClan()){
+            PlayerManager targetManager = new PlayerManager(main, target);
+
+            if(targetManager.inClan()){
                 player.sendMessage("§cCe joueur est déjà dans un clan");
+                return false;
+            }
+
+            int maxMembers = clanManager.getClanMaxMembers();
+            int members = clanManager.getMembers().size();
+            if(members >= maxMembers) {
+                player.sendMessage("§cVotre clan est plein");
                 return false;
             }
 
@@ -114,16 +122,18 @@ public class ClanCommand implements CommandExecutor {
             }
 
             String clan = args[1];
-            if(!clanManager.hasInvitation(player)) {
+            if(!clanManager.hasInvitation(player, clan)) {
                 player.sendMessage("§cVous n'avez pas d'invitation pour ce clan");
                 return false;
             }
 
             clanManager.removeInvitation(player);
-            clanManager.addMember(player);
+
+            ClanManager manager = new ClanManager(main, clan);
+            manager.addMember(player);
 
             player.sendMessage("§aVous avez rejoint le clan " + clan);
-            Player player1 = Bukkit.getPlayer(clanManager.getOwner());
+            Player player1 = Bukkit.getPlayer(manager.getOwner());
             if(player1 != null) {
                 player1.sendMessage("§a" + player.getName() + " a accepté votre invitation");
             }
@@ -146,14 +156,15 @@ public class ClanCommand implements CommandExecutor {
             }
 
             String clan = args[1];
-            if(!clanManager.hasInvitation(player)) {
+            if(!clanManager.hasInvitation(player, clan)) {
                 player.sendMessage("§cVous n'avez pas d'invitation pour ce clan");
                 return false;
             }
 
-            clanManager.removeInvitation(player);
+            ClanManager manager = new ClanManager(main, clan);
+            manager.removeInvitation(player);
             player.sendMessage("§cVous avez refusé l'invitation du clan " + clan);
-            Player player1 = Bukkit.getPlayer(clanManager.getOwner());
+            Player player1 = Bukkit.getPlayer(manager.getOwner());
             if(player1 != null) {
                 player1.sendMessage("§c" + player.getName() + " a refusé votre invitation");
             }
@@ -197,6 +208,7 @@ public class ClanCommand implements CommandExecutor {
                 player.sendMessage("§cVous avez atteint le nombre maximum de claims");
                 return false;
             }
+
             main.getChunkManager().claimChunk(player, playerManager.getClan());
             player.sendMessage("§a§l» §7Vous avez claim ce chunk avec succès");
             return false;
@@ -254,45 +266,6 @@ public class ClanCommand implements CommandExecutor {
         }
 
         /*
-        * Ally
-         */
-
-        if(args[0].equalsIgnoreCase("ally")){
-            if(args.length != 2) {
-                player.sendMessage("§c/clan ally <clan>");
-                return false;
-            }
-
-            if(!playerManager.inClan()) {
-                player.sendMessage("§cVous n'êtes pas dans un clan");
-                return false;
-            }
-
-            String ownerId = clanManager.getOwner();
-            String playerId = player.getUniqueId().toString();
-
-            if(!ownerId.equals(playerId)) {
-                player.sendMessage("§cVous n'êtes pas le propriétaire de ce clan");
-                return false;
-            }
-
-            if(!clanManager.clanExists(args[1])) {
-                player.sendMessage("§cCe clan n'existe pas");
-                return false;
-            }
-
-            if(clanManager.getAllies().contains(args[1])) {
-                player.sendMessage("§cVous n'êtes plus alliés avec: " + args[1]);
-                clanManager.removeAlly(args[1]);
-                return false;
-            }
-
-            player.sendMessage("§aVous êtes désormais alliés avec: " + args[1]);
-            clanManager.addAlly(args[1]);
-            return false;
-        }
-
-        /*
         * Create
          */
 
@@ -316,6 +289,10 @@ public class ClanCommand implements CommandExecutor {
          */
 
         if(args[0].equalsIgnoreCase("fly")){
+            if(playerManager.getClan().equals("null")){
+                sender.sendMessage("§cVous n'êtes pas dans un clan !");
+                return true;
+            }
 
             if(!sender.hasPermission("clans.flyclaims")){
                 sender.sendMessage("§cVous n'avez pas la permission d'utiliser cette commande !");
@@ -359,9 +336,187 @@ public class ClanCommand implements CommandExecutor {
                 return true;
             }
 
+            if(playerManager.getPlayerRank().equals(PlayerRank.RECRUE)){
+                sender.sendMessage("§cGrade membre nécessaire dans le clan.");
+                return true;
+            }
+
+            for (Player p : Bukkit.getOnlinePlayers()){
+                if (p.getOpenInventory().getTitle().equals("Coffre du clan: " + playerManager.getClan())){
+                    sender.sendMessage("§cVotre coffre de clan est déjà ouvert par un autre membre du clan.");
+                    return true;
+                }
+            }
             ChestManager chestManager = new ChestManager(main, player);
             chestManager.openChest();
             return false;
+        }
+
+        /*
+        * Base
+         */
+
+        if(args[0].equalsIgnoreCase("base")){
+            if(playerManager.getClan().equals("null")){
+                sender.sendMessage("§cVous n'êtes pas dans un clan !");
+                return true;
+            }
+
+            if(clanManager.getClanBase() == null){
+                sender.sendMessage("§cVotre clan n'a pas encore de base !");
+                return true;
+            }
+
+            player.teleport(clanManager.getClanBase());
+            return false;
+        }
+
+        /*
+        * Setbase
+         */
+
+        if(args[0].equalsIgnoreCase("setbase")){
+            if(playerManager.getClan().equals("null")){
+                sender.sendMessage("§cVous n'êtes pas dans un clan !");
+                return true;
+            }
+
+            String ownerId = clanManager.getOwner();
+            String playerId = player.getUniqueId().toString();
+
+            if(!ownerId.equals(playerId)) {
+                player.sendMessage("§cVous n'avez pas la permission de changer de base de clan");
+                return false;
+            }
+
+            if(clanManager.getClanLevel() < 20){
+                player.sendMessage("§cVous devez être niveau 20 pour définir une base de clan");
+                return false;
+            }
+
+            clanManager.setClanBase(player.getLocation());
+            player.sendMessage("§a§l» §7Vous avez défini la base de votre clan avec succès");
+            return false;
+        }
+
+        /*
+        * Promote
+         */
+
+        if(args[0].equalsIgnoreCase("promote")){
+            if(playerManager.getClan().equals("null")){
+                sender.sendMessage("§cVous n'êtes pas dans un clan !");
+                return true;
+            }
+
+            String ownerId = clanManager.getOwner();
+            String playerId = player.getUniqueId().toString();
+
+            if(!ownerId.equals(playerId)) {
+                player.sendMessage("§cVous n'avez pas la permission de promouvoir un membre");
+                return false;
+            }
+
+            if(args.length != 2){
+                player.sendMessage("§c/clan promote <joueur>");
+                return false;
+            }
+
+            if(player.getName().equals(args[1])){
+                player.sendMessage("§cVous ne pouvez pas vous promouvoir");
+                return false;
+            }
+
+            Player target = Bukkit.getPlayer(args[1]);
+            if(target == null){
+                player.sendMessage("§cCe joueur n'est pas connecté");
+                return false;
+            }
+
+            PlayerManager targetManager = new PlayerManager(main, target);
+
+            if(!targetManager.getClan().equals(playerManager.getClan())){
+                player.sendMessage("§cCe joueur n'est pas dans votre clan");
+                return false;
+            }
+
+            switch (targetManager.getPlayerRank()){
+                case CHEF:
+                    return false;
+                case OFFICIER:
+                    player.sendMessage("§cCe joueur est déjà officier");
+                    return false;
+                case MEMBRE:
+                    targetManager.setPlayerRank(PlayerRank.OFFICIER);
+                    player.sendMessage("§a§l» §7Vous avez promu §e" + target.getName() + " §7en officier");
+                    target.sendMessage("§a§l» §7Vous avez été promu officier par §e" + player.getName());
+                    return false;
+                case RECRUE:
+                    targetManager.setPlayerRank(PlayerRank.MEMBRE);
+                    player.sendMessage("§a§l» §7Vous avez promu §e" + target.getName() + " §7en membre");
+                    target.sendMessage("§a§l» §7Vous avez été promu membre par §e" + player.getName());
+                    return false;
+            }
+        }
+
+        /*
+        * Demote
+         */
+
+        if(args[0].equalsIgnoreCase("demote")){
+            if(playerManager.getClan().equals("null")){
+                sender.sendMessage("§cVous n'êtes pas dans un clan !");
+                return true;
+            }
+
+            String ownerId = clanManager.getOwner();
+            String playerId = player.getUniqueId().toString();
+
+            if(!ownerId.equals(playerId)) {
+                player.sendMessage("§cVous n'avez pas la permission de dé-promouvoir un membre");
+                return false;
+            }
+
+            if(args.length != 2){
+                player.sendMessage("§c/clan demote <joueur>");
+                return false;
+            }
+
+            if(player.getName().equals(args[1])){
+                player.sendMessage("§cVous ne pouvez pas vous dé-promouvoir");
+                return false;
+            }
+
+            Player target = Bukkit.getPlayer(args[1]);
+            if(target == null){
+                player.sendMessage("§cCe joueur n'est pas connecté");
+                return false;
+            }
+
+            PlayerManager targetManager = new PlayerManager(main, target);
+
+            if(!targetManager.getClan().equals(playerManager.getClan())){
+                player.sendMessage("§cCe joueur n'est pas dans votre clan");
+                return false;
+            }
+
+            switch (targetManager.getPlayerRank()){
+                case CHEF:
+                    return false;
+                case OFFICIER:
+                    targetManager.setPlayerRank(PlayerRank.MEMBRE);
+                    player.sendMessage("§a§l» §7Vous avez dé-promu §e" + target.getName() + " §7en membre");
+                    target.sendMessage("§a§l» §7Vous avez été dé-promu membre par §e" + player.getName());
+                    return false;
+                case MEMBRE:
+                    targetManager.setPlayerRank(PlayerRank.RECRUE);
+                    player.sendMessage("§a§l» §7Vous avez dé-promu §e" + target.getName() + " §7en recrue");
+                    target.sendMessage("§a§l» §7Vous avez été dé-promu recrue par §e" + player.getName());
+                    return false;
+                case RECRUE:
+                    player.sendMessage("§cCe joueur est déjà recrue");
+                    return false;
+            }
         }
 
         return false;

@@ -3,7 +3,7 @@ package fr.erased.clans.listeners;
 import fr.erased.clans.Main;
 import fr.erased.clans.storage.ClanManager;
 import fr.erased.clans.utils.FileUtils;
-import fr.erased.clans.storage.user.PlayerManager;
+import fr.erased.clans.storage.PlayerManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

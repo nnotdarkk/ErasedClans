@@ -1,7 +1,6 @@
 package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.storage.user.PlayerManager;
 import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,6 +24,7 @@ public class ChestManager {
     }
 
     public Inventory addGlass(Inventory inv){
+
         int level = clanManager.getClanLevel();
 
         if(level < 100){
@@ -54,6 +54,16 @@ public class ChestManager {
         if(level < 20){
             for (int i = 9; i < 18; i++) {
                 inv.setItem(i, new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).setDisplayName("§cDisponible au niveau 20").build(false));
+            }
+        }
+        return inv;
+    }
+
+    public Inventory removeGlass(Inventory inv){
+        for (int i = 9; i < 54; i++) {
+            if(inv.getItem(i) == null) continue;
+            if(inv.getItem(i).getType().equals(Material.GRAY_STAINED_GLASS_PANE)){
+                inv.setItem(i, null);
             }
         }
         return inv;

@@ -1,9 +1,8 @@
 package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.ui.QuestsUI;
 import fr.erased.clans.storage.ClanManager;
-import fr.erased.clans.storage.user.PlayerManager;
+import fr.erased.clans.storage.PlayerManager;
 import fr.erased.clans.ui.ClanUI;
 import fr.erased.clans.utils.ChatUtils;
 import org.bukkit.entity.Player;
@@ -32,10 +31,6 @@ public class InventoryClick implements Listener {
             e.setCancelled(true);
             switch (e.getCurrentItem().getType()){
                 case LIME_TERRACOTTA:
-                    if(player.hasPermission("erasedclans.create")){
-                        player.sendMessage("§cErreur: Grade vip requis pour créer un clan, vous pouvez tout de même en rejoindre un.");
-                        return;
-                    }
                     player.closeInventory();
                     player.sendMessage(ChatUtils.getCenteredText("§7 "));
                     player.sendMessage(ChatUtils.getCenteredText("§6§lCRÉATION DE CLAN"));
@@ -64,8 +59,13 @@ public class InventoryClick implements Listener {
                     break;
 
                 case BOOK:
-                    QuestsUI questsUI= new QuestsUI(main, player);
-                    //questsUI.openEasyQuestsUI(playerManager.getClan(player));
+                    player.closeInventory();
+                    player.sendMessage("§cCette fonctionnalité arrive bientôt !");
+                    break;
+
+                case CHEST:
+                    player.closeInventory();
+                    player.performCommand("clan chest");
                     break;
             }
         }
@@ -77,7 +77,6 @@ public class InventoryClick implements Listener {
                     player.closeInventory();
                     player.sendMessage("§cVous avez quitté le clan " + playerManager.getClan());
                     clanManager.removeMember(player);
-                    playerManager.unregisterClan();
                     break;
                 case RED_TERRACOTTA:
                     ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main, playerManager.getClan());

@@ -3,11 +3,14 @@ package fr.erased.clans.listeners;
 import fr.erased.clans.Main;
 import fr.erased.clans.storage.ClanManager;
 import org.bukkit.Chunk;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -22,26 +25,26 @@ public class ClaimsCancels implements Listener {
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void event(BlockBreakEvent e){
-        if(main.getChunkManager().isClaimed(e.getBlock().getLocation().getChunk())){
+        Chunk chunk = e.getBlock().getLocation().getChunk();
+        if(main.getChunkManager().isClaimed(chunk)){
             String uuid = e.getPlayer().getUniqueId().toString();
-            Chunk chunk = e.getPlayer().getLocation().getChunk();
             String clan = main.getChunkManager().getClaimer(chunk);
             if(!new ClanManager(main, clan).getMembers().contains(uuid)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
+                e.getPlayer().sendMessage("§cErreur: Cette zone est claim.");
             }
         }
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
     public void event(BlockPlaceEvent e){
-        if(main.getChunkManager().isClaimed(e.getBlock().getLocation().getChunk())){
+        Chunk chunk = e.getBlock().getLocation().getChunk();
+        if(main.getChunkManager().isClaimed(chunk)){
             String uuid = e.getPlayer().getUniqueId().toString();
-            Chunk chunk = e.getPlayer().getLocation().getChunk();
             String clan = main.getChunkManager().getClaimer(chunk);
             if(!new ClanManager(main, clan).getMembers().contains(uuid)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
+                e.getPlayer().sendMessage("§cErreur: Cette zone est claim.");
             }
         }
     }
@@ -50,13 +53,24 @@ public class ClaimsCancels implements Listener {
     public void event(PlayerInteractEvent e){
         if(e.getClickedBlock() == null) return;
 
-        if(main.getChunkManager().isClaimed(e.getClickedBlock().getLocation().getChunk())){
+        Chunk chunk = e.getClickedBlock().getLocation().getChunk();
+        if(main.getChunkManager().isClaimed(chunk)){
             String uuid = e.getPlayer().getUniqueId().toString();
-            Chunk chunk = e.getPlayer().getLocation().getChunk();
             String clan = main.getChunkManager().getClaimer(chunk);
             if(!new ClanManager(main, clan).getMembers().contains(uuid)){
                 e.setCancelled(true);
-                e.getPlayer().sendMessage("§cVous ne pouvez pas faire ça dans une zone claim.");
+                e.getPlayer().sendMessage("§cErreur: Cette zone est claim.");
+            }
+        }
+    }
+
+    @EventHandler (priority = EventPriority.HIGHEST)
+    public void event(EntityDamageByEntityEvent e){
+        if(e.getEntity() instanceof Player){
+            Player p = (Player) e.getEntity();
+            if(main.getChunkManager().isClaimed(p.getLocation().getChunk())){
+                e.setCancelled(true);
+                p.sendMessage("§cErreur: Cette zone est claim.");
             }
         }
     }

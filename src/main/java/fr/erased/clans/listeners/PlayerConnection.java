@@ -1,7 +1,7 @@
 package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.storage.user.PlayerManager;
+import fr.erased.clans.storage.PlayerManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;

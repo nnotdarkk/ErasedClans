@@ -1,7 +1,8 @@
-package fr.erased.clans.storage.user;
+package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
 import fr.erased.clans.storage.enums.PlayerRank;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -10,11 +11,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class PlayerManager {
 
     private final Main main;
     private final Player player;
+    private final String uuid;
 
     private static final List<Player> createState = new ArrayList<>();
     private static final List<Player> fly = new ArrayList<>();
@@ -22,11 +25,13 @@ public class PlayerManager {
     public PlayerManager(Main main, Player player) {
         this.main = main;
         this.player = player;
+        this.uuid = player.getUniqueId().toString();
     }
 
     public PlayerManager(Main main, String uuid){
         this.main = main;
-        this.player = main.getServer().getPlayer(uuid);
+        this.uuid = uuid;
+        this.player = null;
     }
 
     public void registerPlayer(){
@@ -58,10 +63,14 @@ public class PlayerManager {
     }
 
     public void registerClan(String name){
+        registerClan(name, PlayerRank.RECRUE);
+    }
+
+    public void registerClan(String name, PlayerRank rank){
         FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
 
         f.set("clan", name);
-        f.set("rank", PlayerRank.RECRUE.toString());
+        f.set("rank", rank.toString());
         try {
             f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
         } catch (IOException e) {
@@ -71,7 +80,7 @@ public class PlayerManager {
 
 
     public void unregisterClan(){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
+        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
 
         f.set("clan", "null");
         f.set("rank", "null");
@@ -96,6 +105,10 @@ public class PlayerManager {
         return PlayerRank.valueOf(rank);
     }
 
+    public String getPlayerRankString(){
+        return getPlayerRank().getFormattedName();
+    }
+
     public void setPlayerRank(PlayerRank rank){
         FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
 
@@ -108,8 +121,8 @@ public class PlayerManager {
     }
 
     public String getName(){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-        return f.get("name").toString();
+        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
+        return f.getString("name");
     }
 
     public boolean inClan(){

@@ -1,7 +1,9 @@
 package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.storage.user.PlayerManager;
+import fr.erased.clans.storage.enums.ClanStatus;
+import fr.erased.clans.storage.enums.PlayerRank;
+import fr.erased.clans.utils.ExpUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -31,7 +33,6 @@ public class ClanManager {
     public void createClan(Player owner) {
         main.getFileManager().createFile("clans", clan);
 
-
         List<String> members = new ArrayList<>();
         members.add(owner.getUniqueId().toString());
 
@@ -48,23 +49,62 @@ public class ClanManager {
         f.set("xp", 0);
         f.createSection("chest", chest);
         f.set("base", null);
-        f.set("allies", new ArrayList<>());
         f.set("claims", null);
 
         saveFile();
-        new PlayerManager(main, owner).registerClan(clan);
+        new PlayerManager(main, owner).registerClan(clan, PlayerRank.CHEF);
     }
 
     public void addInvitation(Player player){
         invitation.put(clan, player);
     }
-
     public void removeInvitation(Player player){
         invitation.remove(clan, player);
     }
+    public boolean hasInvitation(Player player, String name){
+        return invitation.containsKey(name) && invitation.containsValue(player);
+    }
 
-    public boolean hasInvitation(Player player){
-        return invitation.containsKey(clan) && invitation.containsValue(player);
+    public Location getClanBase(){
+        return f.getLocation("base");
+    }
+    public int getClanXp(){
+        return f.getInt("xp");
+    }
+    public int getClanLevel(){
+        ExpUtils expUtils = new ExpUtils(getClanXp());
+        return expUtils.getLevel();
+    }
+    public String getOwner() {
+        return f.getString("owner");
+    }
+    public List<String> getMembers(){
+        return f.getStringList("members");
+    }
+    public List<String> getClaims(){
+        return f.getStringList("claims");
+    }
+    public int getClanMaxMembers(){
+        return getClanStatus().getMaxMembers();
+    }
+    public int getClanMaxClaims(){
+        return getClanStatus().getMaxClaims();
+    }
+
+    public ClanStatus getClanStatus(){
+        if(getClanLevel() >= 100){
+            return ClanStatus.EMPIRE;
+        }
+
+        if(getClanLevel() >= 80){
+            return ClanStatus.CITADELLE;
+        }
+
+        if(getClanLevel() >= 50){
+            return ClanStatus.ROYAUME;
+        }
+
+        return ClanStatus.VILLAGE;
     }
 
     public Inventory getClanChest(){
@@ -82,63 +122,22 @@ public class ClanManager {
         for (int slot = 0; slot < inv.getSize(); slot++) {
             chest.put(slot, inv.getItem(slot));
         }
-        f.set("chest", chest);
-        saveFile();
+        set("chest", chest);
     }
 
-    public Location getClanBase(){
-        return f.getLocation("base");
-    }
 
     public void setClanBase(Location location){
-        f.set("base", location);
-        saveFile();
-    }
-
-    public int getClanMaxClaims(){
-        return getMembers().size() * 10;
+        set("base", location);
     }
 
     public void setClanXp(int xp){
-        f.set("xp", xp);
-        saveFile();
+        set("xp", xp);
     }
 
-    public int getClanXp(){
-        return f.getInt("xp");
+    public void addClanXp(int xp){
+        setClanXp(getClanXp() + xp);
     }
 
-    public int getClanLevel(){
-        int a = 1000;
-        int xp = getClanXp();
-        int level = 1;
-        while (xp >= a){
-            xp -= a;
-            a += 500;
-            level++;
-        }
-        if(level > 100){
-            level = 100;
-        }
-        return level;
-    }
-
-    public int getClanExpToNextLevel(){
-        int a = 1000;
-        int level = getClanLevel();
-        int b = 1;
-        for(int i = 1; i < level; i++){
-            b = b + 1;
-            for (int j = 0; j < b; j++) {
-                a += 500;
-            }
-        }
-        return a;
-    }
-
-    public boolean clanExists(){
-        return clanExists(clan);
-    }
     public boolean clanExists(String clan){
         return main.getFileManager().getFile("clans", clan).exists();
     }
@@ -152,80 +151,26 @@ public class ClanManager {
         main.getFileManager().removeFile("clans", clan);
     }
 
-    public List<String> getAllies() {
-        return f.getStringList("allies");
-    }
-
-    public void addAlly(String ally) {
-        List<String> allies = f.getStringList("allies");
-        allies.add(ally);
-        f.set("allies", allies);
-        saveFile();
-    }
-
-    public void removeAlly(String ally) {
-
-        List<String> allies = f.getStringList("allies");
-        allies.remove(ally);
-        f.set("allies", allies);
-        saveFile();
-    }
-
-    public List<String> getEnemies() {
-        return f.getStringList("enemies");
-    }
-
-    public void addEnemies(String enemy) {
-        List<String> enemies = f.getStringList("enemies");
-        enemies.add(enemy);
-        f.set("enemies", enemies);
-        saveFile();
-    }
-
-    public void removeEnemies(String enemy) {
-        List<String> enemies = f.getStringList("enemies");
-        enemies.remove(enemy);
-        f.set("enemies", enemies);
-        saveFile();
-    }
-
-    public String getOwner() {
-        return f.get("owner").toString();
-    }
-
-
-    public List<String> getMembers(){
-        return f.getStringList("members");
-    }
-
-    public List<String> getClaims(){
-        return f.getStringList("claims");
-    }
-
     public void removeAllClaims(){
-        f.set("claims", new ArrayList<>());
-        saveFile();
+        set("claims", new ArrayList<>());
     }
 
     public void addClaim(Chunk chunk){
         List<String> claims = getClaims();
         claims.add(String.valueOf(chunk));
-        f.set("claims", claims);
-        saveFile();
+        set("claims", claims);
     }
 
     public void removeClaim(Chunk chunk){
         List<String> claims = getClaims();
         claims.remove(String.valueOf(chunk));
-        f.set("claims", claims);
-        saveFile();
+        set("claims", claims);
     }
 
     public void addMember(Player player){
-        List<String> members = f.getStringList("members");
+        List<String> members = getMembers();
         members.add(player.getUniqueId().toString());
-        f.set("members", members);
-        saveFile();
+        set("members", members);
 
         new PlayerManager(main, player).registerClan(clan);
     }
@@ -236,12 +181,16 @@ public class ClanManager {
             return;
         }
 
-        List<String> members = f.getStringList("members");
+        List<String> members = getMembers();
         members.remove(player.getUniqueId().toString());
-        f.set("members", members);
-        saveFile();
+        set("members", members);
 
         new PlayerManager(main, player).unregisterClan();
+    }
+
+    public void set(String path, Object value){
+        f.set(path, value);
+        saveFile();
     }
 
     private void saveFile(){

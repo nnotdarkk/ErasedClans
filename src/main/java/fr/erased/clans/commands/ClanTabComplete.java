@@ -26,6 +26,8 @@ public class ClanTabComplete implements TabCompleter {
             list.add("create");
             list.add("fly");
             list.add("chest");
+            list.add("base");
+            list.add("setbase");
             return list;
         }
 

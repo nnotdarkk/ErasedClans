@@ -1,7 +1,7 @@
 package fr.erased.clans.listeners;
 
 import fr.erased.clans.Main;
-import fr.erased.clans.storage.user.PlayerManager;
+import fr.erased.clans.storage.PlayerManager;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,11 +10,11 @@ import org.bukkit.event.player.PlayerMoveEvent;
 
 import java.util.Objects;
 
-public class FlyListeners implements Listener {
+public class MoveListener implements Listener {
 
     private final Main main;
 
-    public FlyListeners(Main main) {
+    public MoveListener(Main main) {
         this.main = main;
     }
 
