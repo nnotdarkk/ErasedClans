@@ -5,25 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ClanPlaceholders.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/enums/ClanStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ExpUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanTabComplete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanTabComplete.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ClanPlaceholders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ClanPlaceholders.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/AsyncPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/AsyncPlayerChat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClaimsCancels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClaimsCancels.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClanChestInteract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClanChestInteract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/FlyListeners.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/MoveListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/InventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/InventoryClick.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/PlayerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/PlayerConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ChestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ChestManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ClanManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/enums/PlayerRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/enums/PlayerRank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/user/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/PlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/PlayerManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,7 +127,14 @@
       <option name="project" value="LOCAL" />
       <updated>1677163664932</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="01/04/23">
+      <created>1680336811119</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1680336811119</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -160,6 +152,7 @@
     <MESSAGE value="patches" />
     <MESSAGE value="big patch" />
     <MESSAGE value="commit-opti" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit-opti" />
+    <MESSAGE value="01/04/23" />
+    <option name="LAST_COMMIT_MESSAGE" value="01/04/23" />
   </component>
 </project>

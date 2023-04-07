@@ -34,6 +34,9 @@ public class ClanPlaceholders extends PlaceholderExpansion {
         ClanManager clanManager = new ClanManager(main, playerManager.getClan());
 
         if(params.equalsIgnoreCase("name")){
+            if(playerManager.getClan().equals("null")){
+                return "§cAucun";
+            }
             return playerManager.getClan();
         }
 

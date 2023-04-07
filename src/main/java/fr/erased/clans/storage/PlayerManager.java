@@ -2,6 +2,7 @@ package fr.erased.clans.storage;
 
 import fr.erased.clans.Main;
 import fr.erased.clans.storage.enums.PlayerRank;
+import lombok.SneakyThrows;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -19,6 +20,8 @@ public class PlayerManager {
     private final Player player;
     private final String uuid;
 
+    private YamlConfiguration f;
+
     private static final List<Player> createState = new ArrayList<>();
     private static final List<Player> fly = new ArrayList<>();
 
@@ -26,82 +29,77 @@ public class PlayerManager {
         this.main = main;
         this.player = player;
         this.uuid = player.getUniqueId().toString();
+
+        if(main.getFileManager().getFile("userdata", uuid) == null){
+            this.f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
+            return;
+        }
+
+        this.f = null;
     }
 
     public PlayerManager(Main main, String uuid){
         this.main = main;
         this.uuid = uuid;
         this.player = null;
+
+        if(main.getFileManager().getFile("userdata", uuid) == null){
+            this.f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
+            return;
+        }
+
+        this.f = null;
+    }
+
+    public void addFly(){
+        fly.add(player);
+    }
+    public void removeFly(){
+        fly.remove(player);
+    }
+    public boolean isFly(){
+        return fly.contains(player);
+    }
+
+    public void addCreateState(){
+        createState.add(player);
+    }
+    public void removeCreateState(){
+        createState.remove(player);
+    }
+    public boolean isInCreateState(){
+        return createState.contains(player);
     }
 
     public void registerPlayer(){
-        boolean exist = false;
-
         File file = new File(main.getDataFolder() + File.separator + "userdata" + File.separator + player.getUniqueId() + ".yml");
 
         if(!file.exists()){
             try {
                 file.createNewFile();
-                exist = true;
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        }
 
-        if(exist){
-            FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
+            f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
 
             f.set("name", player.getName());
             f.set("clan", "null");
             f.set("rank", "null");
-            try {
-                f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public void registerClan(String name){
-        registerClan(name, PlayerRank.RECRUE);
-    }
-
-    public void registerClan(String name, PlayerRank rank){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-
-        f.set("clan", name);
-        f.set("rank", rank.toString());
-        try {
-            f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    public void unregisterClan(){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
-
-        f.set("clan", "null");
-        f.set("rank", "null");
-        try {
-            f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            saveFile();
         }
     }
 
     public String getClan(){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-        String clan = f.get("clan").toString();
+        return f.get("clan").toString();
+    }
 
-        return clan;
+    public String getName(){
+        return f.getString("name");
     }
 
     public PlayerRank getPlayerRank(){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
         String rank = f.getString("rank");
-
         return PlayerRank.valueOf(rank);
     }
 
@@ -109,20 +107,26 @@ public class PlayerManager {
         return getPlayerRank().getFormattedName();
     }
 
-    public void setPlayerRank(PlayerRank rank){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-
-        f.set("rank", rank.toString());
-        try {
-            f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public void registerClan(String name){
+        registerClan(name, PlayerRank.RECRUE);
     }
 
-    public String getName(){
-        FileConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
-        return f.getString("name");
+    public void registerClan(String name, PlayerRank rank){
+        f.set("clan", name);
+        f.set("rank", rank.toString());
+        saveFile();
+    }
+
+
+    public void unregisterClan(){
+        f.set("clan", "null");
+        f.set("rank", "null");
+        saveFile();
+    }
+
+    public void setPlayerRank(PlayerRank rank){
+        f.set("rank", rank.toString());
+        saveFile();
     }
 
     public boolean inClan(){
@@ -133,27 +137,11 @@ public class PlayerManager {
         }
     }
 
-    public void addCreateState(){
-        createState.add(player);
-    }
-
-    public void removeCreateState(){
-        createState.remove(player);
-    }
-
-    public boolean isInCreateState(){
-        return createState.contains(player);
-    }
-
-    public void addFly(){
-        fly.add(player);
-    }
-
-    public void removeFly(){
-        fly.remove(player);
-    }
-
-    public boolean isFly(){
-        return fly.contains(player);
+    public void saveFile(){
+        try {
+            f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

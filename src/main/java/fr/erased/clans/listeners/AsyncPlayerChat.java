@@ -49,6 +49,12 @@ public class AsyncPlayerChat implements Listener {
                 return;
             }
 
+            if(e.getMessage().equalsIgnoreCase("null")){
+                player.sendMessage("§cNom de clan invalide, création annulée");
+                playerManager.removeCreateState();
+                return;
+            }
+
             playerManager.removeCreateState();
             player.sendMessage("§aVotre clan a bien été créé ! /clan pour le consulter");
 
