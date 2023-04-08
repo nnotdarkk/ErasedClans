@@ -11,6 +11,7 @@ import java.util.List;
 public class ChunkManager {
 
     private final Main main;
+    private final YamlConfiguration f;
 
     public ChunkManager(Main main) {
         this.main = main;
@@ -18,23 +19,26 @@ public class ChunkManager {
         if(!main.getFileManager().getFile("chunk", "chunks").exists()){
             main.getFileManager().createFile("chunk", "chunks");
         }
+
+        f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
     }
 
     private Chunk getChunk(Player player){
         return player.getLocation().getChunk();
     }
+    public String getClaimer(Chunk chunk){
+        return f.getString(chunk.toString());
+    }
+    public boolean isClaimed(Chunk chunk){
+        return f.contains(chunk.toString());
+    }
 
     public void claimChunk(Player player, String clan){
         Chunk chunk = getChunk(player);
 
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
         f.set(chunk.toString(), clan);
 
-        try {
-            f.save(main.getFileManager().getFile("chunk", "chunks"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        saveFile();
 
         new ClanManager(main, clan).addClaim(chunk);
     }
@@ -45,41 +49,27 @@ public class ChunkManager {
 
         new ClanManager(main, clan).removeClaim(chunk);
 
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
         f.set(chunk.toString(), null);
 
-        try {
-            f.save(main.getFileManager().getFile("chunk", "chunks"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-    }
-
-    public boolean isClaimed(Chunk chunk){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
-        return f.contains(chunk.toString());
-    }
-
-    public String getClaimer(Chunk chunk){
-        YamlConfiguration f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
-        return f.getString(chunk.toString());
+        saveFile();
     }
 
     public void removeAllClaimsForClan(String clan){
 
         YamlConfiguration f1 = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("clans", clan));
-        YamlConfiguration f2 = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("chunk", "chunks"));
 
         List<String> chunks = f1.getStringList("claims");
 
         for(String chunk : chunks){
-            f2.set(chunk, null);
+            f.set(chunk, null);
         }
 
+        saveFile();
+    }
+
+    public void saveFile(){
         try {
-            f2.save(main.getFileManager().getFile("chunk", "chunks"));
+            f.save(main.getFileManager().getFile("chunk", "chunks"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

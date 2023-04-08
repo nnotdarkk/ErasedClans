@@ -3,6 +3,7 @@ package fr.erased.clans.storage;
 import fr.erased.clans.Main;
 import fr.erased.clans.storage.enums.PlayerRank;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,20 +18,18 @@ import java.util.UUID;
 public class PlayerManager {
 
     private final Main main;
-    private final Player player;
     private final String uuid;
 
     private YamlConfiguration f;
 
-    private static final List<Player> createState = new ArrayList<>();
-    private static final List<Player> fly = new ArrayList<>();
+    private static final List<String> createState = new ArrayList<>();
+    private static final List<String> fly = new ArrayList<>();
 
     public PlayerManager(Main main, Player player) {
         this.main = main;
-        this.player = player;
         this.uuid = player.getUniqueId().toString();
 
-        if(main.getFileManager().getFile("userdata", uuid) == null){
+        if(main.getFileManager().getFile("userdata", uuid) != null){
             this.f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
             return;
         }
@@ -41,9 +40,8 @@ public class PlayerManager {
     public PlayerManager(Main main, String uuid){
         this.main = main;
         this.uuid = uuid;
-        this.player = null;
 
-        if(main.getFileManager().getFile("userdata", uuid) == null){
+        if(main.getFileManager().getFile("userdata", uuid) != null){
             this.f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
             return;
         }
@@ -52,27 +50,27 @@ public class PlayerManager {
     }
 
     public void addFly(){
-        fly.add(player);
+        fly.add(uuid);
     }
     public void removeFly(){
-        fly.remove(player);
+        fly.remove(uuid);
     }
     public boolean isFly(){
-        return fly.contains(player);
+        return fly.contains(uuid);
     }
 
     public void addCreateState(){
-        createState.add(player);
+        createState.add(uuid);
     }
     public void removeCreateState(){
-        createState.remove(player);
+        createState.remove(uuid);
     }
     public boolean isInCreateState(){
-        return createState.contains(player);
+        return createState.contains(uuid);
     }
 
     public void registerPlayer(){
-        File file = new File(main.getDataFolder() + File.separator + "userdata" + File.separator + player.getUniqueId() + ".yml");
+        File file = new File(main.getDataFolder() + File.separator + "userdata" + File.separator + uuid + ".yml");
 
         if(!file.exists()){
             try {
@@ -81,9 +79,9 @@ public class PlayerManager {
                 throw new RuntimeException(e);
             }
 
-            f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
+            f = YamlConfiguration.loadConfiguration(main.getFileManager().getFile("userdata", uuid));
 
-            f.set("name", player.getName());
+            f.set("name", Bukkit.getPlayer(uuid).getName());
             f.set("clan", "null");
             f.set("rank", "null");
             saveFile();
@@ -139,7 +137,7 @@ public class PlayerManager {
 
     public void saveFile(){
         try {
-            f.save(main.getFileManager().getFile("userdata", player.getUniqueId().toString()));
+            f.save(main.getFileManager().getFile("userdata", uuid));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

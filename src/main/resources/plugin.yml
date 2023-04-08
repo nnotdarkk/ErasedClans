@@ -5,5 +5,3 @@ author: NotDark_
 main: fr.erased.clans.Main
 softdepend:
   - PlaceholderAPI
-commands:
-  clan:

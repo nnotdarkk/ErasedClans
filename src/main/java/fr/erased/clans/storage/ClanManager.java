@@ -62,7 +62,12 @@ public class ClanManager {
         invitation.remove(clan, player);
     }
     public boolean hasInvitation(Player player, String name){
-        return invitation.containsKey(name) && invitation.containsValue(player);
+        for(Map.Entry<String, Player> entry : invitation.entrySet()){
+            if(entry.getValue().equals(player) && entry.getKey().equals(name)){
+                return true;
+            }
+        }
+        return false;
     }
 
     public Location getClanBase(){
