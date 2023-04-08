@@ -4,45 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/BaseCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/ChestCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/ClaimCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/CreateCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/DemoteCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/FlyCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/InviteCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/JoinCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/KickCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/PromoteCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/QuitCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/RefuseCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/SetbaseCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/UnclaimCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/UnclaimallCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/BypassCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ClanInfoCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceJoinCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceKickCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/UserInfoCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/BukkitCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/BukkitCompleter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/Command.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/CommandArgs.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/CommandFramework.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/Completer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanTabComplete.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCompleter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClaimsCancels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClaimsCancels.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ChunkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ChunkManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ClanManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/PlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-    </list>
+    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -177,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680884873914</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="07/04/23">
+      <created>1680969128305</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1680969128305</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
