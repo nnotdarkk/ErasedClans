@@ -119,7 +119,7 @@ public class ItemBuilder {
 
     public ItemStack build(Boolean showItemInfo) {
         ItemMeta im = this.is.getItemMeta();
-        if (!showItemInfo){
+        if (!showItemInfo) {
             im.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
             im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             im.addItemFlags(ItemFlag.HIDE_DESTROYS);

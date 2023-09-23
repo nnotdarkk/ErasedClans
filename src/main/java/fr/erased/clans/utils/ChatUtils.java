@@ -3,18 +3,18 @@ package fr.erased.clans.utils;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.util.ChatPaginator;
 
-public class ChatUtils {
+public final class ChatUtils {
 
     public static String getCenteredText(String base) {
         StringBuilder builder = new StringBuilder();
         int startPos = getPosToWriteCentered(ChatColor.stripColor(base));
-        
-        for(int i = 0; i < startPos; i++) {
+
+        for (int i = 0; i < startPos; i++) {
             builder.append(" ");
         }
-        
+
         builder.append(base);
-        
+
         return builder.toString();
     }
 

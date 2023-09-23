@@ -1,10 +1,11 @@
 package fr.erased.clans.listeners;
 
-import fr.erased.clans.Main;
-import fr.erased.clans.storage.ClanManager;
-import fr.erased.clans.storage.PlayerManager;
-import fr.erased.clans.ui.ClanUI;
+import fr.erased.clans.ErasedClans;
+import fr.erased.clans.manager.ClanManager;
+import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.invetory.ClanUI;
 import fr.erased.clans.utils.ChatUtils;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -12,24 +13,24 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class InventoryClick implements Listener {
 
-    private final Main main;
+    private final ErasedClans main;
 
-    public InventoryClick(Main main) {
+    public InventoryClick(ErasedClans main) {
         this.main = main;
     }
 
     @EventHandler
-    public void onInventoryClick(InventoryClickEvent e){
-        if(e.getCurrentItem() == null) return;
-        if(e.getCurrentItem().getItemMeta() == null) return;
+    public void onInventoryClick(InventoryClickEvent e) {
+        if (e.getCurrentItem() == null) return;
+        if (e.getCurrentItem().getItemMeta() == null) return;
 
         Player player = (Player) e.getWhoClicked();
         PlayerManager playerManager = new PlayerManager(main, player);
         ClanManager clanManager = new ClanManager(main, playerManager.getClan());
 
-        if(e.getView().getTitle().equals("Créer un clan")){
+        if (e.getView().getTitle().equals("Créer un clan")) {
             e.setCancelled(true);
-            switch (e.getCurrentItem().getType()){
+            switch (e.getCurrentItem().getType()) {
                 case LIME_TERRACOTTA:
                     player.closeInventory();
                     player.sendMessage(ChatUtils.getCenteredText("§7 "));
@@ -46,9 +47,9 @@ public class InventoryClick implements Listener {
             }
         }
 
-        if(e.getView().getTitle().startsWith("Clan:")){
+        if (e.getView().getTitle().startsWith("Clan:")) {
             e.setCancelled(true);
-            switch (e.getCurrentItem().getType()){
+            switch (e.getCurrentItem().getType()) {
                 case ARROW:
                     player.closeInventory();
                     break;
@@ -70,9 +71,9 @@ public class InventoryClick implements Listener {
             }
         }
 
-        if(e.getView().getTitle().startsWith("Quitter le clan")){
+        if (e.getView().getTitle().startsWith("Quitter le clan")) {
             e.setCancelled(true);
-            switch (e.getCurrentItem().getType()){
+            switch (e.getCurrentItem().getType()) {
                 case LIME_TERRACOTTA:
                     player.closeInventory();
                     player.sendMessage("§cVous avez quitté le clan " + playerManager.getClan());
@@ -86,15 +87,13 @@ public class InventoryClick implements Listener {
             }
         }
 
-        if(e.getView().getTitle().startsWith("Quêtes:")){
+        if (e.getView().getTitle().startsWith("Quêtes:")) {
             e.setCancelled(true);
-            switch (e.getCurrentItem().getType()){
-                case ARROW:
-                    e.setCancelled(true);
-                    player.closeInventory();
-                    ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main, playerManager.getClan());
-                    clanUI.openClanUI();
-                    break;
+            if (e.getCurrentItem().getType() == Material.ARROW) {
+                e.setCancelled(true);
+                player.closeInventory();
+                ClanUI clanUI = new ClanUI((Player) e.getWhoClicked(), main, playerManager.getClan());
+                clanUI.openClanUI();
             }
         }
     }

@@ -11,7 +11,6 @@ import java.lang.annotation.Target;
  * should have a single CommandArgs argument
  *
  * @author minnymin3
- *
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

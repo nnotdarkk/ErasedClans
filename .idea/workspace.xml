@@ -4,7 +4,80 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="" />
+    <list default="true" id="1defdefd-b428-4967-9768-fac8b291f013" name="Changes" comment="update 2.0">
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/HelpCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/AddClanXpCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceClaimCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceDemoteCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceOpenChestCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForcePromoteCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceSetBaseCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceSetLeadCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceUnclaimAllCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceUnclaimCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/SetClanXpCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/TeleportBaseCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/quests/Quest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/quests/QuestsManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/quests/list/breaking/BreakingEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/quests/list/breaking/BreakingQuestType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/quests/list/kill/KillMobsEnum.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/quests/list/kill/KillMobsQuestType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/IntUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ClanPlaceholders.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ClanPlaceholders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ErasedClans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/ClanCompleter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/BaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/BaseCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/ChestCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/ChestCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/ClaimCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/ClaimCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/CreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/CreateCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/DemoteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/DemoteCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/FlyCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/FlyCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/InviteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/InviteCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/JoinCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/JoinCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/KickCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/KickCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/PromoteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/PromoteCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/QuitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/QuitCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/RefuseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/RefuseCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/SetbaseCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/SetBaseCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/UnclaimCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/UnclaimCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/UnclaimallCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/UnclaimAllCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/BypassCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/BypassClaimsCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ClanInfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ClanInfoCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceJoinCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceJoinCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceKickCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/ForceKickCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/UserInfoCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/commands/subcommands/admin/PlayerInfoCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/AsyncPlayerChat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/AsyncPlayerChat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClaimsCancels.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClaimsCancels.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClanChestInteract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/ClanChestInteract.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/InventoryClick.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/InventoryClick.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/MoveListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/MoveListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/PlayerConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/listeners/PlayerConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ChestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ChestManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ChunkManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ChunkManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/ClanManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/enums/ClanStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/enums/ClanStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/storage/enums/PlayerRank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/manager/enums/PlayerRank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/ClanUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/invetory/ClanUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/CreateUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/invetory/CreateUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/ui/QuestsUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/invetory/QuestsUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ChatUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ChatUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ExpUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ExpUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/FileUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/FileUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ItemBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/ItemBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/BukkitCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/BukkitCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/BukkitCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/BukkitCompleter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/Command.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/Command.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/CommandArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/CommandArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/CommandFramework.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/CommandFramework.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/Completer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/fr/erased/clans/utils/commands/Completer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,6 +97,13 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProblemsViewState">
     <option name="autoscrollToSource" value="true" />
   </component>
@@ -38,10 +118,12 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Makar/eclipse-workspace/ErasedClans/src/main/java/fr/erased/clans/utils&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Makar/eclipse-workspace/ImanitySpigot3-version-1.8.8&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;build.tools&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -52,6 +134,11 @@
       <recent name="fr.erased.clans.ui" />
       <recent name="fr.erased.clans" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn -e clean install" />
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="ErasedClans [clean,install]" type="MavenRunConfiguration" factoryName="Maven" nameIsGenerated="true">
@@ -146,7 +233,14 @@
       <option name="project" value="LOCAL" />
       <updated>1680969128305</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="update pom.xml">
+      <created>1680970006431</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1680970006431</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,6 +260,8 @@
     <MESSAGE value="commit-opti" />
     <MESSAGE value="01/04/23" />
     <MESSAGE value="07/04/23" />
-    <option name="LAST_COMMIT_MESSAGE" value="07/04/23" />
+    <MESSAGE value="update pom.xml" />
+    <MESSAGE value="update 2.0" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 2.0" />
   </component>
 </project>

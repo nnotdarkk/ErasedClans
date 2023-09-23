@@ -25,21 +25,19 @@ import java.util.Map.Entry;
  * The main command framework class used for controlling the framework.
  *
  * @author minnymin3
- *
  */
 public class CommandFramework implements CommandExecutor {
 
-    private Map<String, Entry<Method, Object>> commandMap = new HashMap<>();
+    private final Map<String, Entry<Method, Object>> commandMap = new HashMap<>();
     private CommandMap map;
-    private Plugin plugin;
+    private final Plugin plugin;
 
     /**
      * Initializes the command framework and sets up the command maps
      */
     public CommandFramework(Plugin plugin) {
         this.plugin = plugin;
-        if (plugin.getServer().getPluginManager() instanceof SimplePluginManager) {
-            SimplePluginManager manager = (SimplePluginManager) plugin.getServer().getPluginManager();
+        if (plugin.getServer().getPluginManager() instanceof SimplePluginManager manager) {
             try {
                 Field field = SimplePluginManager.class.getDeclaredField("commandMap");
                 field.setAccessible(true);
@@ -59,10 +57,10 @@ public class CommandFramework implements CommandExecutor {
      * Handles commands. Used in the onCommand method in your JavaPlugin class
      *
      * @param sender The {@link CommandSender} parsed from
-     *            onCommand
-     * @param cmd The {@link org.bukkit.command.Command} parsed from onCommand
-     * @param label The label parsed from onCommand
-     * @param args The arguments parsed from onCommand
+     *               onCommand
+     * @param cmd    The {@link org.bukkit.command.Command} parsed from onCommand
+     * @param label  The label parsed from onCommand
+     * @param args   The arguments parsed from onCommand
      * @return Always returns true for simplicity's sake in onCommand
      */
     public boolean handleCommand(CommandSender sender, org.bukkit.command.Command cmd, String label, String[] args) {

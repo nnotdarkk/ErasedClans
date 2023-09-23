@@ -1,7 +1,9 @@
-package fr.erased.clans.storage.enums;
+package fr.erased.clans.manager.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@Getter @AllArgsConstructor
 public enum PlayerRank {
 
     CHEF("§cChef"),
@@ -9,9 +11,7 @@ public enum PlayerRank {
     MEMBRE("§bMembre"),
     RECRUE("§fRecrue");
 
-    @Getter
+
     private final String formattedName;
-    PlayerRank(String formattedName) {
-        this.formattedName = formattedName;
-    }
+
 }

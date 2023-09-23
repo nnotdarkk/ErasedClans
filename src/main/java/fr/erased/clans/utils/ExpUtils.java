@@ -11,36 +11,36 @@ public class ExpUtils {
         this.exp = exp;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return getLevel(getExp());
     }
 
-    public int getLevel(int xp){
+    public int getLevel(int xp) {
         int a = 100;
         int level = 1;
 
-        while (xp >= a){
+        while (xp >= a) {
             xp -= a;
             a += 100;
             level++;
         }
 
-        if(level > 100){
+        if (level > 100) {
             level = 100;
         }
 
         return level;
     }
 
-    public int getExpToNextLevel(){
+    public int getExpToNextLevel() {
         return getExpToNextLevel(getLevel());
     }
 
-    public int getExpToNextLevel(int level){
+    public int getExpToNextLevel(int level) {
         int a = 100;
         int b = 1;
 
-        for(int i = 1; i < level; i++){
+        for (int i = 1; i < level; i++) {
             b = b + 1;
             for (int j = 0; j < b; j++) {
                 a += 100;
@@ -50,8 +50,8 @@ public class ExpUtils {
         return a;
     }
 
-    public int getPercent(){
-        if(getLevel() == 1){
+    public int getPercent() {
+        if (getLevel() == 1) {
             return getPercent(getExp(), getExpToNextLevel());
         }
 
@@ -64,12 +64,12 @@ public class ExpUtils {
         return getPercent(a, b);
     }
 
-    private int getPercent(double currentValue, double maxValue){
-        return (int) ((currentValue/maxValue) * 100);
+    private int getPercent(double currentValue, double maxValue) {
+        return (int) ((currentValue / maxValue) * 100);
     }
 
-    public int getActualExp(){
-        if(getLevel() == 1){
+    public int getActualExp() {
+        if (getLevel() == 1) {
             return getExp();
         }
 
@@ -79,8 +79,8 @@ public class ExpUtils {
         return getExp() - maxExp;
     }
 
-    public int getActualExpToNextLevel(){
-        if(getLevel() == 1){
+    public int getActualExpToNextLevel() {
+        if (getLevel() == 1) {
             return getExpToNextLevel();
         }
 

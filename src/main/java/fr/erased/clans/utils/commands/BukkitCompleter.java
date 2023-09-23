@@ -17,7 +17,6 @@ import java.util.Map;
  * completers per command
  *
  * @author minnymin3
- *
  */
 public class BukkitCompleter implements TabCompleter {
 

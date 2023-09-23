@@ -1,17 +1,18 @@
 package fr.erased.clans.commands.subcommands;
 
-import fr.erased.clans.Main;
-import fr.erased.clans.storage.ClanManager;
-import fr.erased.clans.storage.PlayerManager;
+import fr.erased.clans.ErasedClans;
+import fr.erased.clans.manager.ClanManager;
+import fr.erased.clans.manager.PlayerManager;
+import fr.erased.clans.manager.enums.PlayerRank;
 import fr.erased.clans.utils.commands.Command;
 import fr.erased.clans.utils.commands.CommandArgs;
 import org.bukkit.entity.Player;
 
-public class UnclaimallCommand {
+public class UnclaimAllCommand {
 
-    private final Main main;
+    private final ErasedClans main;
 
-    public UnclaimallCommand(Main main) {
+    public UnclaimAllCommand(ErasedClans main) {
         this.main = main;
     }
 
@@ -19,21 +20,19 @@ public class UnclaimallCommand {
     public void onCommand(CommandArgs args) {
         Player player = args.getPlayer();
         PlayerManager playerManager = new PlayerManager(main, player);
-        ClanManager clanManager = new ClanManager(main, playerManager.getClan());
 
-        if(!playerManager.inClan()) {
+
+        if (!playerManager.inClan()) {
             player.sendMessage("§cVous n'êtes pas dans un clan");
             return;
         }
 
-        String ownerId = clanManager.getOwner();
-        String playerId = player.getUniqueId().toString();
-
-        if(!ownerId.equals(playerId)) {
-            player.sendMessage("§cVous n'êtes pas le propriétaire de ce clan");
+        if (playerManager.getPlayerRank() != PlayerRank.CHEF) {
+            player.sendMessage("§cVous n'avez pas la permission requise. (CHEF)");
             return;
         }
 
+        ClanManager clanManager = new ClanManager(main, playerManager.getClan());
         main.getChunkManager().removeAllClaimsForClan(playerManager.getClan());
         clanManager.removeAllClaims();
 

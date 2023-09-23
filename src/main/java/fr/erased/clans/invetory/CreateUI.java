@@ -1,6 +1,6 @@
-package fr.erased.clans.ui;
+package fr.erased.clans.invetory;
 
-import fr.erased.clans.Main;
+import fr.erased.clans.ErasedClans;
 import fr.erased.clans.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -10,15 +10,15 @@ import org.bukkit.inventory.ItemStack;
 
 public class CreateUI {
 
-    private final Main main;
+    private final ErasedClans main;
     private final Player player;
 
-    public CreateUI(Player player, Main main) {
+    public CreateUI(Player player, ErasedClans main) {
         this.main = main;
         this.player = player;
     }
 
-    public void openCreateUI(){
+    public void openCreateUI() {
         Inventory inv = Bukkit.createInventory(null, 27, "Créer un clan");
 
         ItemStack create = new ItemBuilder(Material.LIME_TERRACOTTA).setDisplayName("§aCréer un clan").build(false);

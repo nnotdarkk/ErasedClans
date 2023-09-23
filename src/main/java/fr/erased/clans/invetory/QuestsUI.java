@@ -1,22 +1,15 @@
-package fr.erased.clans.ui;
+package fr.erased.clans.invetory;
 
-import fr.erased.clans.Main;
-import fr.erased.clans.utils.ItemBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import fr.erased.clans.ErasedClans;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.Arrays;
 
 public class QuestsUI {
 
-    private final Main main;
+    private final ErasedClans main;
 
-    private Player player;
+    private final Player player;
 
-    public QuestsUI(Main main, Player player) {
+    public QuestsUI(ErasedClans main, Player player) {
         this.main = main;
         this.player = player;
     }

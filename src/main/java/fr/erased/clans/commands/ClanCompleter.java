@@ -2,9 +2,6 @@ package fr.erased.clans.commands;
 
 import fr.erased.clans.utils.commands.CommandArgs;
 import fr.erased.clans.utils.commands.Completer;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +13,7 @@ public class ClanCompleter {
 
         List<String> list = new ArrayList<>();
 
-        if(args.getArgs().length == 1) {
+        if (args.getArgs().length == 1) {
             list.add("base");
             list.add("chest");
             list.add("claim");
@@ -32,7 +29,33 @@ public class ClanCompleter {
             list.add("unclaim");
             list.add("unclaimall");
             list.add("kick");
+
+            if (args.getPlayer().hasPermission("clans.admin")) {
+                list.add("admin");
+            }
             return list;
+        }
+
+        if (args.getPlayer().hasPermission("clans.admin")) {
+            if (args.getArgs(0).equalsIgnoreCase("admin")) {
+                if (args.getArgs().length == 2) {
+                    list.add("bypassclaims");
+                    list.add("claninfo");
+                    list.add("playerinfo");
+                    list.add("forcekick");
+                    list.add("forcepromote");
+                    list.add("forcedemote");
+                    list.add("forceclaim");
+                    list.add("forceunclaim");
+                    list.add("forceunclaimall");
+                    list.add("teleportbase");
+                    list.add("setclanxp");
+                    list.add("addclanxp");
+                    list.add("setbase");
+                    list.add("forceopenchest");
+                    return list;
+                }
+            }
         }
 
         return null;

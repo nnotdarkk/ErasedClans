@@ -1,7 +1,7 @@
 name: ErasedClans
 version: 1.0
 api-version: 1.19
-author: NotDark_
-main: fr.erased.clans.Main
+author: Karaam_
+main: fr.erased.clans.ErasedClans
 softdepend:
   - PlaceholderAPI
